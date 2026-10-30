@@ -1,0 +1,93 @@
+/* ============================================================================
+   Redesign de Chats — a folha que corrige o hifi-styles.css
+
+   Estes valores vieram MEDIDOS do Figma "Redesign Chats"
+   (Njtv9YG3qdWWZ90uEn0ty4 · chat list 7-15 · bubbles/chat 13295-483597).
+   O hifi-styles.css é uma cópia do phiz-app e está desatualizado nestes pontos,
+   então ele fica intacto e esta folha entra DEPOIS dele.
+
+   Carregue em todo protótipo que tem tela de conversa:
+     <link href="../../shared/hifi-styles.css">
+     <link href="../../shared/redesign-chats.css">   <-- depois
+     <link href="styles.css">
+
+   Veio de convite-styles.css do protótipo "Avisar no WhatsApp" (ago/2026).
+   ============================================================================ */
+
+:root{
+  --chat-bg: #F6F1EA;             /* chat screen/bg-chat */
+  --chat-doodle: #E9E0D1;         /* chat screen/content-chat-bg-ilustration */
+  --bubble-sent: #D9FDD4;         /* chat screen/bg-bubble-sent */
+  --bubble-received: #FFFFFF;     /* chat screen/bg-bubble-received */
+  --warning-bg: #FBF2C2;          /* background/warning/dynamic/a */
+  --blue-base: #1679E2;           /* blue/dynamic/base */
+  --r-bubble: 16px;               /* xl */
+}
+
+/* Selo de verificado é AZUL no produto, não verde */
+.verified-badge{background:var(--blue-base)}
+
+/* Fundo da conversa + o doodle no tom certo (mais suave que o antigo) */
+.bubbles{
+  background:var(--chat-bg);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220' fill='none'><g stroke='%23E9E0D1' stroke-width='1' opacity='.8' fill='none' stroke-linecap='round' stroke-linejoin='round'><circle cx='22' cy='30' r='10'/><path d='M16 30h12M22 24v12'/><rect x='60' y='14' width='22' height='16' rx='3'/><circle cx='71' cy='22' r='3'/><path d='M104 16l8 14h-16z'/><circle cx='148' cy='24' r='9'/><path d='M141 24h14M148 17v14'/><path d='M188 14c4 0 8 4 8 8s-4 8-8 8-8-4-8-8 4-8 8-8z'/><path d='M186 22l2 3 4-5'/><path d='M30 70c2-6 8-10 14-10s12 4 14 10c-2 6-8 10-14 10s-12-4-14-10z'/><circle cx='44' cy='70' r='3'/><path d='M84 64h22v14H84z'/><path d='M84 64l11 8 11-8'/><path d='M134 60l16 8-16 8z'/><path d='M180 62l16 16M196 62l-16 16'/><path d='M16 116c4-2 10-2 14 0M16 122c4-2 10-2 14 0M16 128c4-2 10-2 14 0'/><circle cx='66' cy='118' r='10'/><path d='M62 118l4 4 6-7'/><path d='M104 110l8 4-8 4 8 4-8 4'/><path d='M148 112v12M142 118h12'/><path d='M188 110a8 8 0 1116 0 8 8 0 01-16 0z'/><circle cx='196' cy='110' r='2'/><path d='M22 162l8 8-8 8M30 162l-8 8 8 8'/><path d='M60 156h22M60 162h22M60 168h16'/><circle cx='110' cy='164' r='10'/><path d='M104 164l4 4 8-8'/><path d='M148 156l-8 16h16z'/><path d='M180 156l16 0M180 162l16 0M180 168l10 0'/><circle cx='22' cy='198' r='8'/><circle cx='22' cy='198' r='3'/><path d='M64 192c4 0 8 4 8 8M76 192c0 4-4 8-8 8'/><path d='M104 192l8 12-8 0z'/><path d='M148 196v-6M148 196v6M142 196h12'/><path d='M188 194a4 4 0 110 8M196 194a4 4 0 100 8'/></g></svg>");
+}
+
+.bubbles{background-size:178px 178px}
+
+/* Bolhas: raio 16 uniforme (sem bico), tipo 17/20 letterSpacing -.5 */
+.bubble{
+  border-radius:var(--r-bubble);
+  font-size:17px;line-height:20px;letter-spacing:-.5px;
+  padding:9px 12px 7px;
+  box-shadow:0 1px 1px rgba(0,0,0,.09);
+}
+.bubble.them{background:var(--bubble-received);border-top-left-radius:var(--r-bubble)}
+.bubble.me{background:var(--bubble-sent);border-top-right-radius:var(--r-bubble);font-weight:400}
+/* Hora e ticks: Label Medium 13/16 no cinza secundário */
+.bubble .meta{font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--note)}
+.bubble.me .meta{color:var(--note)}
+.bubble.me .meta .tick{color:var(--blue-base)}
+
+/* Separador de dia é texto solto, sem pílula branca */
+.daychip{
+  background:transparent;box-shadow:none;
+  color:var(--note);font-weight:500;font-size:13px;letter-spacing:-.5px;
+  padding:4px 0;
+}
+/* Aviso de sistema: no redesign é uma pílula BRANCA (o DS antigo usava o cinza
+   translúcido em .bubbles .systemchip — este seletor precisa da mesma força). */
+.bubbles .systemchip{
+  background:var(--paper);border-radius:10px;
+  color:var(--ink);font-size:14px;line-height:19px;font-weight:400;
+  padding:8px 14px;box-shadow:0 1px 1px rgba(0,0,0,.06);
+}
+/* Faixa de criptografia no amarelo do token */
+.chat-secure-banner{
+  background:var(--warning-bg);color:#5C4A12;
+  border-radius:8px;margin:10px 12px 8px;
+  font-size:14px;line-height:19px;font-weight:400;
+}
+
+/* Cabeçalho da conversa: seta sem círculo, avatar 40, nome 17 semibold */
+.appbar-compact .back-arrow,
+.appbar-compact .iconbtn{background:transparent}
+.appbar-compact .back-arrow:active,
+.appbar-compact .iconbtn:active{background:rgba(1,7,5,.06)}
+.appbar-compact .avatar.sm{width:40px;height:40px}
+.appbar-compact .ttl{font-size:17px;line-height:24px;font-weight:600;letter-spacing:-.5px}
+.appbar-compact .ttl .pres{font-size:13px;line-height:16px;letter-spacing:-.5px}
+
+/* Card de contexto acompanha o raio das bolhas */
+.ctx-card{border-radius:var(--r-bubble)}
+
+[data-theme="dark"] .bubbles{background:#0A0E10}
+[data-theme="dark"] .bubble.them{background:#1C242A}
+[data-theme="dark"] .bubble.me{background:#1B4332;color:#EAF7EF}
+[data-theme="dark"] .bubbles .systemchip{background:var(--surface-2);color:var(--ink)}
+
+/* Avatar de quem ainda não está no Phiz aparece dessaturado (é a agenda, não um perfil) */
+.ncp-section-invite .ncp-row .avatar img{filter:grayscale(1) opacity(.82)}
+/* A folha "Nova conversa" abre sobre a chat list; o scrim é o que sobra dela */
+.ncp-sheet .anno{margin:14px 20px 0}
+

@@ -1,0 +1,653 @@
+/* ============================================================================
+   Seguro PhizChat — estilos do protótipo (prefixo sg-)
+
+   A base (hifi-styles → config-shell → phiz-ui) já traz tokens e componentes.
+   Aqui entra SÓ o que é do protótipo. Valores do arquivo Insurance e da
+   Foundation: verde #19B852 · texto verde #169343 · selo #1679E2 ·
+   crítico #CF293F · neutro #F5F5F5 · texto #141414 / #666 · linha #CCCDBE66.
+   Motion: 180–300ms, ease-out; nada repete pra sempre; "reduzir movimento"
+   desliga tudo no fim do arquivo.
+   ============================================================================ */
+
+:root{
+  --sg-ease: cubic-bezier(.32,.72,.35,1);
+  --sg-out: cubic-bezier(.2,.8,.2,1);
+}
+
+/* ── Casca ────────────────────────────────────────────────────────────── */
+.sg-pg{position:relative}
+.sg-body{padding-bottom:16px}
+.sg-pad{padding:0 20px}
+.sg-rodape{flex-shrink:0;display:flex;flex-direction:column;gap:12px;padding:12px 20px 30px;background:var(--me-bg)}
+.sg-chats{position:relative;background:#fff}
+.sg-lista{padding-bottom:124px;background:#fff}
+.sg-pg .tag-novo,.sg-link-row .tag-novo,.sg-item .tag-novo{
+  margin-left:8px;font-family:var(--pz-sf);font-size:11px;line-height:16px;font-weight:600;
+  color:#fff;background:var(--pz-brand);border-radius:999px;padding:0 6px;vertical-align:2px}
+
+/* ── Tipografia das telas do seguro ───────────────────────────────────── */
+.sg-h1{font-family:var(--pz-pop);font-weight:600;font-size:24px;line-height:32px;letter-spacing:-1px;color:var(--pz-ink);text-align:center;margin:4px 0 0}
+.sg-h2{font-family:var(--pz-pop);font-weight:600;font-size:22px;line-height:28px;letter-spacing:-.8px;color:var(--pz-ink);text-align:center;margin:0}
+.sg-h2.esq,.sg-p.esq{text-align:left}
+.sg-p{font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-note);text-align:center;margin:0}
+.sg-p em,.sg-kev em,.sg-banner em,.sg-so-admin em{font-style:normal;font-weight:600;color:inherit}
+.sg-nota{font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.3px;color:var(--pz-note);text-align:center;margin:0}
+.sg-secao{font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px;color:var(--pz-ink);padding:28px 20px 12px}
+.sg-help{display:flex;align-items:flex-start;gap:4px;margin:6px 0 0;font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.3px;color:var(--pz-note)}
+.sg-help.erro{color:var(--pz-critical)}
+.sg-help.aviso{color:#8A6100}
+.sg-help > span:first-child:not(:last-child){flex-shrink:0;margin-top:1px}
+.sg-link{background:none;border:0;padding:8px 0 0;font-family:var(--pz-sf);font-weight:600;font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-brand-ink);cursor:pointer;text-align:left}
+
+/* ── Botões (Button do DS) ────────────────────────────────────────────── */
+.sg-btn{
+  width:100%;height:48px;border-radius:999px;border:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--pz-pop);font-weight:600;font-size:16px;letter-spacing:-.4px;
+  transition:transform .12s var(--sg-out), background-color .2s, opacity .2s;
+}
+.sg-btn:active:not(:disabled){transform:scale(.98)}
+.sg-btn.primary{background:var(--pz-brand);color:#fff}
+.sg-btn.primary:hover:not(:disabled){background:#17A84B}
+.sg-btn.secondary{background:var(--pz-surface);color:var(--pz-ink)}
+.sg-btn.tertiary{background:none;color:var(--pz-brand-ink)}
+.sg-btn.critical{background:var(--pz-critical);color:#fff}
+.sg-btn:disabled{background:var(--pz-surface);color:#BFBFBF;cursor:default}
+.sg-btn.loading{cursor:progress}
+.sg-btn.ok{background:var(--pz-brand);color:#fff}
+.sg-btns{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+
+.sg-spin{width:20px;height:20px;border-radius:999px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sgGira .8s linear infinite;flex-shrink:0}
+.sg-spin.verde{border-color:rgba(25,184,82,.25);border-top-color:var(--pz-brand)}
+@keyframes sgGira{to{transform:rotate(360deg)}}
+
+/* ── Escudo do seguro (componente 189:7776) ───────────────────────────── */
+.sg-shield{position:relative;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.sg-shield .arcos{position:absolute;inset:0;filter:drop-shadow(0 0 6px rgba(25,184,82,.35))}
+.sg-shield .miolo{
+  position:absolute;inset:16%;border-radius:999px;background:#fff;
+  box-shadow:0 0 0 6px #DDF4E5, 0 0 0 7px #C9EDD5;
+  display:flex;align-items:center;justify-content:center;
+}
+.sg-shield.anima .arcos{animation:sgArcos 2.4s var(--sg-out) both}
+.sg-shield.anima .miolo{animation:sgPop .42s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes sgArcos{from{transform:rotate(-200deg);opacity:0}25%{opacity:1}to{transform:rotate(0)}}
+@keyframes sgPop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* Escudo de vidro do Contact info (164:12856): anel verde com brilho */
+.sg-glass-seg{box-shadow:0 0 0 2px #19B852, 0 0 12px rgba(25,184,82,.55);margin-right:8px}
+.sg-glass-seg.pulsa{animation:sgPulsa 1.1s ease-out 2}
+@keyframes sgPulsa{0%{box-shadow:0 0 0 2px #19B852,0 0 0 0 rgba(25,184,82,.6)}70%{box-shadow:0 0 0 2px #19B852,0 0 0 12px rgba(25,184,82,0)}100%{box-shadow:0 0 0 2px #19B852,0 0 12px rgba(25,184,82,.55)}}
+
+/* ── Kev Seguros (Transmission Chat Card) ─────────────────────────────── */
+.sg-kev{
+  align-self:stretch;display:flex;align-items:center;gap:16px;padding:16px;border-radius:20px;
+  border:1px solid transparent;
+  background:linear-gradient(#F4FAEE,#F4FAEE) padding-box, linear-gradient(100deg,#8FD16A 0%,#19B852 45%,#1679E2 100%) border-box;
+}
+.sg-kev img{height:16px;width:auto;flex-shrink:0}
+.sg-kev .tx{display:flex;flex-direction:column;gap:2px;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:#444;text-align:left}
+.sg-kev .sg-link{padding:2px 0 0;font-size:13px;line-height:16px}
+
+/* Eu × outra pessoa */
+.sg-par{align-self:stretch;display:flex;align-items:center;justify-content:space-between;background:var(--pz-surface);border-radius:24px;padding:20px 24px}
+.sg-par-p{display:flex;flex-direction:column;align-items:center;gap:4px;width:110px}
+.sg-par-p img{width:56px;height:56px;border-radius:999px;object-fit:cover}
+.sg-par-p .n{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+.sg-par-p .v{display:inline-flex;align-items:center;gap:4px;font-family:var(--pz-sf);font-size:13px;line-height:16px;color:var(--pz-note)}
+.sg-par-p .v.ok{color:var(--pz-blue)}
+.sg-par-meio{width:40px;height:40px;border-radius:12px;background:#E9E9E9;display:flex;align-items:center;justify-content:center}
+
+/* ── Folha (BottomSheet do DS) ────────────────────────────────────────── */
+.sg-sheet-wrap{position:absolute;inset:0;z-index:60;display:flex;flex-direction:column;justify-content:flex-end;overflow:clip}
+.sg-scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);animation:sgFade .24s ease-out both}
+.sg-sheet{
+  position:relative;background:#fff;border-radius:32px 32px 0 0;padding:24px 20px 34px;
+  max-height:92%;overflow-y:auto;animation:sgSobe .3s var(--sg-ease) both;
+}
+.sg-sheet::-webkit-scrollbar{width:0}
+.sg-sheet.estatico{animation:none}
+.sg-sheet-wrap.saindo .sg-scrim{animation:sgFadeOut .22s ease-in both}
+.sg-sheet-wrap.saindo .sg-sheet{animation:sgDesce .22s ease-in both}
+.sg-sheet-x{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:999px;border:0;background:var(--pz-surface);color:var(--pz-ink);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}
+.sg-sheet-fundo{position:absolute;inset:0;z-index:59;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,.4)}
+@keyframes sgSobe{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes sgDesce{from{transform:translateY(0)}to{transform:translateY(100%)}}
+@keyframes sgFade{from{opacity:0}to{opacity:1}}
+@keyframes sgFadeOut{from{opacity:1}to{opacity:0}}
+
+.sg-folha-seg{display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:12px}
+.sg-folha-cta{align-self:stretch;margin-top:4px}
+.sg-folha-simples{display:flex;flex-direction:column;gap:12px;padding-top:24px}
+.sg-folha-simples .sg-group{margin-top:8px}
+
+/* ── Snackbar ─────────────────────────────────────────────────────────── */
+.sg-toast{
+  position:absolute;left:50%;bottom:176px;transform:translateX(-50%);z-index:80;
+  background:#141414;color:#fff;border-radius:999px;padding:12px 20px;white-space:nowrap;
+  font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);animation:sgToast .26s var(--sg-out) both;
+}
+.sg-toast.sai{animation:sgToastSai .22s ease-in both}
+@keyframes sgToast{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes sgToastSai{to{opacity:0;transform:translate(-50%,8px)}}
+
+/* ── Campo (TextField do DS) ──────────────────────────────────────────── */
+.sg-field label{
+  position:relative;display:flex;align-items:center;gap:8px;min-height:48px;
+  border:1px solid #8C8C8C;border-radius:12px;padding:0 14px;background:#fff;
+  transition:border-color .18s, box-shadow .18s;cursor:text;
+}
+.sg-field.multi label{align-items:flex-start;padding-top:14px;padding-bottom:12px}
+.sg-field .lb{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);padding:0 4px;background:#fff;
+  font-family:var(--pz-sf);font-size:17px;line-height:20px;letter-spacing:-.5px;color:#9E9E9E;
+  pointer-events:none;transition:top .18s var(--sg-out), font-size .18s var(--sg-out), color .18s;
+  max-width:calc(100% - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sg-field.multi .lb{top:24px}
+.sg-field.cheio .lb,.sg-field.foco .lb,.sg-field label:has(input[type=date]) .lb{top:0;font-size:12px;line-height:14px;color:var(--pz-ink);font-weight:500}
+.sg-field input,.sg-field textarea{
+  flex:1;min-width:0;border:0;outline:0;background:none;resize:none;
+  font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-ink);padding:11px 0;
+}
+.sg-field textarea{padding:0;min-height:96px}
+.sg-field input[type=date]{min-height:24px}
+.sg-field input[type=date]::-webkit-calendar-picker-indicator{opacity:0;position:absolute;right:12px;width:28px;height:28px;cursor:pointer}
+.sg-field .ic{color:var(--pz-note);display:flex;pointer-events:none}
+.sg-field.foco label{border-color:var(--pz-brand);box-shadow:0 0 0 1px var(--pz-brand)}
+.sg-field.foco .lb{color:var(--pz-brand-ink)}
+.sg-field.erro label{border-color:var(--pz-critical);box-shadow:0 0 0 1px var(--pz-critical)}
+.sg-field.erro .lb{color:var(--pz-critical)}
+
+.sg-form{display:flex;flex-direction:column;gap:16px;padding-top:8px}
+.sg-linha{display:flex;gap:16px;align-items:flex-start}
+.sg-intro .t{font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px;color:var(--pz-ink)}
+.sg-intro .s{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-note);margin-top:4px}
+.sg-check{display:inline-flex;align-items:center;gap:8px;margin-top:-4px;font-family:var(--pz-sf);font-size:15px;line-height:20px;color:var(--pz-ink);cursor:pointer;align-self:flex-start}
+.sg-check input{position:absolute;opacity:0;pointer-events:none}
+.sg-check .box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--pz-ink);display:flex;align-items:center;justify-content:center;color:transparent;transition:background .15s, border-color .15s}
+.sg-check input:checked + .box{background:var(--pz-brand);border-color:var(--pz-brand);color:#fff}
+.sg-check input:focus-visible + .box{box-shadow:0 0 0 3px rgba(25,184,82,.35)}
+
+/* Campos que o CEP preenche entram em sequência */
+.sg-preenche{animation:sgEntra .24s var(--sg-out) both}
+.sg-preenche.d2{animation-delay:.06s}
+.sg-preenche.d3{animation-delay:.12s}
+/* Shake de erro ao salvar (duas classes pra reiniciar a animação) */
+.sg-sacode-0 .sg-field.erro,.sg-sacode-1 .sg-field.erro{animation:sgSacode0 .32s ease-in-out}
+.sg-sacode-1 .sg-field.erro{animation-name:sgSacode1}
+@keyframes sgSacode0{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@keyframes sgSacode1{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+/* ── Lista agrupada (GroupList/Item) ──────────────────────────────────── */
+.sg-group{display:flex;flex-direction:column;gap:2px}
+.sg-item{display:flex;align-items:center;gap:16px;min-height:56px;padding:12px 20px;background:var(--pz-surface);color:var(--pz-ink)}
+.sg-item:first-child{border-top-left-radius:24px;border-top-right-radius:24px}
+.sg-item:last-child{border-bottom-left-radius:24px;border-bottom-right-radius:24px}
+.sg-item.tap{cursor:pointer}
+.sg-item.tap:active{background:#EDEDED}
+.sg-item .av{width:40px;height:40px;border-radius:999px;object-fit:cover;flex-shrink:0}
+.sg-item .ic{display:flex;flex-shrink:0}
+.sg-item .tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.sg-item .t{font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px}
+.sg-item .s{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-note)}
+.sg-item .s2{font-family:var(--pz-sf);font-size:13px;line-height:16px;color:var(--pz-note)}
+.sg-chev{color:var(--pz-note);flex-shrink:0}
+.sg-item.critico{color:var(--pz-critical)}
+.sg-item.off{opacity:.5}
+.sg-tag{flex-shrink:0;background:var(--pz-brand);color:#fff;border-radius:999px;padding:2px 8px;font-family:var(--pz-sf);font-size:12px;line-height:16px;font-weight:600}
+.sg-val{font-family:var(--pz-sf);font-size:15px;color:var(--pz-note)}
+.sg-ok{width:20px;height:20px;border-radius:999px;background:var(--pz-brand);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+.sg-switch{position:relative;width:51px;height:31px;border-radius:999px;border:0;background:#E5E5EA;cursor:pointer;flex-shrink:0;transition:background .2s}
+.sg-switch::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:999px;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15);transition:transform .22s var(--sg-ease)}
+.sg-switch.on{background:var(--pz-brand)}
+.sg-switch.on::after{transform:translateX(20px)}
+.sg-switch:disabled{cursor:default}
+.sg-item.off .sg-switch.on{opacity:1}
+
+.sg-stagger .sg-item{animation:sgEntra .24s var(--sg-out) both}
+.sg-stagger .sg-item:nth-child(2){animation-delay:.05s}
+.sg-stagger .sg-item:nth-child(3){animation-delay:.1s}
+.sg-stagger .sg-item:nth-child(4){animation-delay:.15s}
+@keyframes sgEntra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ── Tela do seguro (94:16157 …) ──────────────────────────────────────── */
+.sg-pg > .pg-back{flex-shrink:0}
+.sg-seguro{display:flex;flex-direction:column;align-items:center;gap:12px;padding:8px 20px 24px}
+.sg-infos{align-self:stretch;display:flex;flex-direction:column;gap:16px;margin-top:12px}
+.sg-info{display:flex;align-items:flex-start;gap:12px;text-align:left}
+.sg-info.tap{cursor:pointer}
+.sg-info .ic{width:40px;height:40px;border-radius:12px;background:var(--pz-surface);display:flex;align-items:center;justify-content:center;color:var(--pz-ink);flex-shrink:0}
+.sg-info .tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.sg-info .t{font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:22px;letter-spacing:-.8px;color:var(--pz-ink)}
+.sg-info .s{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-note)}
+.sg-info .sg-chev{margin-top:10px}
+.sg-link-row{align-self:stretch;margin-top:12px;display:flex;align-items:center;gap:12px;padding:14px 16px;border:0;border-radius:20px;background:var(--pz-surface);color:var(--pz-ink);cursor:pointer;font-family:var(--pz-sf);font-size:17px;letter-spacing:-.5px;text-align:left}
+.sg-link-row .lb{flex:1}
+
+/* Verificação simulada e sucesso */
+.sg-verif{display:flex;flex-direction:column;align-items:center;gap:14px;padding:24px 20px}
+.sg-verif-rosto{width:144px;height:144px;border-radius:999px;background:var(--pz-surface);color:var(--pz-ink);display:flex;align-items:center;justify-content:center;position:relative}
+.sg-verif-rosto.analisando::after{content:"";position:absolute;inset:-6px;border-radius:999px;border:3px solid transparent;border-top-color:var(--pz-brand);animation:sgGira 1s linear infinite}
+.sg-verif-rosto.ok{background:var(--pz-brand);color:#fff}
+.sg-check-pop{display:flex;animation:sgPop .45s cubic-bezier(.2,1.3,.4,1) both}
+
+/* Documento */
+.sg-doc{display:flex;flex-direction:column;gap:16px;padding:8px 20px}
+.sg-doc-card{background:var(--pz-surface);border-radius:20px;padding:4px 16px}
+.sg-doc-l{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid var(--pz-line);text-align:left}
+.sg-doc-l:last-child{border-bottom:0}
+.sg-doc-l .k{font-family:var(--pz-sf);font-size:13px;line-height:16px;color:var(--pz-note)}
+.sg-doc-l .v{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-ink)}
+
+/* Prints da indenização */
+.sg-prints{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sg-print{position:relative;aspect-ratio:82/148;border-radius:12px;overflow:hidden;background:#EEE;animation:sgPop .26s var(--sg-out) both}
+.sg-print img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.sg-print .x{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:999px;border:0;background:#fff;color:var(--pz-ink);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.sg-print.add{border:0;background:var(--pz-surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:var(--pz-ink);font-family:var(--pz-sf);font-size:13px;font-weight:600;animation:none}
+
+/* ── Conversas ────────────────────────────────────────────────────────── */
+.sg-dicas-av{border-radius:999px;background:var(--pz-brand);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.sg-dicas-av img{filter:brightness(0) invert(1)}
+.pz-row .pz-av.letra img{filter:brightness(0) invert(1)}
+.sg-so-admin{flex-shrink:0;background:#fff;border-top:1px solid var(--pz-line);padding:20px 20px 34px;text-align:center;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-brand-ink)}
+.sg-promo{position:relative}
+.sg-promo > img{width:100%;display:block;border-radius:8px}
+.sg-promo-tag{position:absolute;right:8px;bottom:8px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);border-radius:999px;padding:3px 10px;font-family:var(--pz-sf);font-size:12px;font-weight:600;color:var(--pz-brand-ink)}
+.sg-promo-tag img{height:10px;width:auto}
+.sg-entra{animation:sgEntra .3s var(--sg-out) both}
+
+.sg-nao-ver{color:var(--pz-note)}
+.sg-tick{display:block;height:16px;overflow:hidden}
+.sg-tick-i{display:inline-flex;align-items:center;gap:4px;animation:sgTick .3s var(--sg-out) both}
+@keyframes sgTick{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Letreiro "Conversa protegida pelo Seguro PhizChat" (9:1518 → 157:8978 → 339:42073) */
+.sg-banner{position:relative;z-index:3;flex-shrink:0;display:flex;justify-content:center;overflow:hidden;height:48px;transition:height .32s var(--sg-ease), opacity .24s}
+.sg-banner.entra .sg-banner-in{animation:sgDoTopo .32s var(--sg-out) both}
+.sg-banner.fechado{height:0;opacity:0}
+.sg-banner-in{
+  margin-top:8px;height:32px;display:inline-flex;align-items:center;gap:6px;padding:0 6px 0 10px;
+  background:#fff;border:0;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.12);cursor:pointer;
+  font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.3px;color:var(--pz-ink);white-space:nowrap;
+}
+.sg-banner-in .l{color:var(--pz-brand-ink);font-weight:600;padding:0 6px}
+@keyframes sgDoTopo{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.sg-pilula{display:inline-flex;align-items:center;gap:4px}
+
+/* Bolha do convite (168:16983): texto, hora e CTA verde dentro da bolha */
+.sg-convite-b{max-width:300px;padding:0!important}
+.sg-convite{padding:10px 12px 0}
+.sg-convite .t{font-family:var(--pz-sf);font-weight:600;font-size:17px;line-height:22px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sg-convite .b{font-family:var(--pz-sf);font-size:17px;line-height:22px;letter-spacing:-.5px;color:var(--pz-ink);margin-top:6px}
+.sg-convite-b .pz-bfoot{padding:2px 10px 4px}
+.sg-convite-cta{border-top:1px solid rgba(0,0,0,.08);padding:12px;text-align:center;font-family:var(--pz-sf);font-weight:600;font-size:15px;color:var(--pz-brand-ink)}
+.sg-enviando{display:inline-flex;align-items:center;gap:4px;font-family:var(--pz-sf);font-size:13px;color:var(--pz-note)}
+
+/* Contact info */
+.sg-bio{margin:0 20px 16px;background:#fff;border-radius:24px;padding:20px;font-family:var(--pz-sf);font-size:15px;color:var(--pz-note)}
+
+/* ── Eu (57:13715) ────────────────────────────────────────────────────── */
+.sg-me{position:relative;background:#fff}
+.sg-me-bar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:8px 20px 4px}
+.sg-me-bar h1{flex:1;font-family:var(--pz-pop);font-weight:600;font-size:24px;line-height:32px;letter-spacing:-1px;color:var(--pz-ink);margin:0}
+.pg-iconbtn.sm{width:40px;height:40px}
+.sg-me-seg{width:40px;height:40px;border-radius:999px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 0 2px #19B852, 0 0 12px rgba(25,184,82,.5)}
+.sg-me-body{padding-bottom:0}
+.sg-me-id{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 20px 20px}
+.sg-me-id img{width:120px;height:120px;border-radius:999px;object-fit:cover}
+.sg-me-id .n{margin-top:8px;font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px;color:var(--pz-ink)}
+.sg-me-id .h{font-family:var(--pz-sf);font-size:15px;color:var(--pz-note)}
+.sg-me-card{margin:0 20px;background:var(--pz-surface);border-radius:24px;overflow:hidden}
+.sg-me-card .sg-nivel{padding:16px 16px 8px;background:#fff;margin:4px 4px 0;border-radius:20px 20px 0 0}
+.sg-me-card .sg-barras{background:#fff;margin:0 4px;padding:0 16px 14px 48px;border-radius:0 0 20px 20px}
+.sg-me-verif{padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.sg-me-verif .t{display:flex;align-items:center;gap:4px;font-family:var(--pz-sf);font-weight:600;font-size:15px;color:var(--pz-ink)}
+.sg-me-verif .s{font-family:var(--pz-sf);font-size:13px;line-height:16px;color:var(--pz-note)}
+.sg-me-grp{margin:12px 20px 0;background:var(--pz-surface);border-radius:24px;overflow:hidden}
+.sg-me-row{display:flex;align-items:center;gap:16px;min-height:56px;padding:0 20px;font-family:var(--pz-sf);font-size:17px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sg-me-row .lb{flex:1}
+.sg-me-row + .sg-me-row{border-top:1px solid #fff}
+.sg-me-row.tap{cursor:pointer}
+.sg-me-row.danger{color:var(--pz-critical)}
+
+/* Nível de proteção */
+.sg-nivel{display:flex;align-items:center;gap:10px}
+.sg-nivel .t{flex:1;font-family:var(--pz-pop);font-weight:600;font-size:15px;letter-spacing:-.6px;color:var(--pz-ink)}
+.sg-nivel-ic{width:26px;height:28px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--pz-sf);font-weight:700;font-size:12px;background:#538FA6;clip-path:path("M13 0 2 4v9c0 7 5 12.6 11 15 6-2.4 11-8 11-15V4L13 0Z")}
+.sg-nivel-ic.on{background:var(--pz-brand)}
+.sg-barras{display:flex;gap:4px}
+.sg-barras i{flex:1;height:4px;border-radius:999px;background:#E3E3E3}
+.sg-barras i.on{background:#538FA6}
+.sg-barras.verde i.on{background:var(--pz-brand)}
+.sg-nivel-card{background:#fff;border-radius:20px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.sg-nivel-card .sg-barras{padding-left:36px}
+.sg-nivel-card + .sg-help{margin:12px 0 12px}
+
+/* Cartão do seguro na Segurança da Conta (FloatCard) */
+.sg-float{
+  width:100%;margin-top:16px;display:flex;align-items:center;gap:12px;padding:16px;border-radius:20px;cursor:pointer;text-align:left;
+  border:1px solid transparent;color:var(--pz-ink);
+  background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#8FD16A 0%,#19B852 45%,#1679E2 100%) border-box;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+}
+.sg-float .ic{width:44px;height:44px;border-radius:12px;background:var(--pz-brand);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sg-float .tx{flex:1;display:flex;flex-direction:column}
+.sg-float .t{font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:22px;letter-spacing:-.8px}
+.sg-float .s{font-family:var(--pz-sf);font-size:13px;line-height:16px;color:var(--pz-note)}
+
+/* ════════════════════════════════════════════════════════════════════════
+   Seguro contra golpes (prefixo sx-) — telas novas da branch do Insurance
+   ════════════════════════════════════════════════════════════════════════ */
+.sx-ic{display:inline-block;flex-shrink:0;background:currentColor;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center}
+.sx-medal{display:block;flex-shrink:0;object-fit:contain;transform:scale(1.3)}
+
+/* Promoção ao abrir o app (2449:43818) */
+.sx-promo-wrap{position:absolute;inset:0;z-index:70;display:flex;flex-direction:column;justify-content:flex-end;overflow:clip}
+.sx-promo-scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);animation:sgFade .28s ease-out both}
+.sx-promo{
+  position:relative;height:729px;max-height:calc(100% - 64px);border-radius:48px 48px 0 0;overflow:clip;
+  background:linear-gradient(180deg,#063A1B 0%,#0E7A36 55%,#19B852 100%);
+  animation:sxPromoSobe .46s cubic-bezier(.2,.9,.25,1) both;
+}
+.sx-promo-wrap.saindo .sx-promo-scrim{animation:sgFadeOut .24s ease-in both}
+.sx-promo-wrap.saindo .sx-promo{animation:sgDesce .24s ease-in both}
+@keyframes sxPromoSobe{from{transform:translateY(100%)}to{transform:none}}
+.sx-promo-x{
+  position:absolute;top:20px;right:20px;z-index:3;width:48px;height:48px;border-radius:999px;cursor:pointer;
+  border:1px solid #fff;background:rgba(255,255,255,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  box-shadow:0 4px 12px rgba(0,0,0,.12), inset 0 0 12px rgba(0,0,0,.04);color:var(--pz-ink);
+  display:flex;align-items:center;justify-content:center;
+}
+.sx-promo-arte{position:absolute;left:26.5px;top:20px;width:340px;height:340px}
+.sx-promo-arte img{position:absolute;display:block}
+.sx-promo-arte .glow{inset:0;width:340px;height:340px}
+.sx-promo-arte .ring{left:36px;top:36px;width:268px;height:268px;opacity:.6}
+.sx-promo-arte .ring2{left:10px;top:10px;width:320px;height:320px}
+.sx-promo-arte .s1{left:29.5px;top:90px;width:22px;height:22px}
+.sx-promo-arte .s2{left:295.5px;top:68px;width:16px;height:16px}
+.sx-promo-arte .s3{left:273.5px;top:240px;width:12px;height:12px}
+.sx-promo-arte .s4{left:57.5px;top:226px;width:10px;height:10px}
+.sx-promo-arte .s5{left:313.5px;top:160px;width:8px;height:8px}
+.sx-promo-arte .medalha{left:-9.5px;top:32px;width:345px;height:329px;object-fit:contain;filter:drop-shadow(0 18px 30px rgba(0,0,0,.12));
+  animation:sxMedalha .7s cubic-bezier(.2,1.25,.4,1) .18s both}
+.sx-promo-arte .sp{animation:sxBrilho 1.6s ease-in-out .5s 2 both}
+.sx-promo-arte .s2,.sx-promo-arte .s4{animation-delay:.8s}
+@keyframes sxMedalha{from{opacity:0;transform:translateY(16px) scale(.86) rotate(-6deg)}to{opacity:1;transform:none}}
+@keyframes sxBrilho{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+.sx-promo-copy{position:absolute;top:340px;left:0;right:0;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;animation:sgEntra .36s var(--sg-out) .3s both}
+.sx-promo-copy .chip{background:#E6F4C9;color:#4D631F;border-radius:999px;padding:6px 14px;font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px}
+.sx-promo-copy h2{margin:14px 0 0;font-family:var(--pz-pop);font-weight:600;font-size:32px;line-height:40px;letter-spacing:-1px;color:#fff}
+.sx-promo-copy p{margin:14px 0 0;font-family:var(--pz-sf);font-weight:590;font-size:17px;line-height:24px;letter-spacing:-.5px;color:#fff}
+.sx-promo-sheet{
+  position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:32px 32px 0 0;
+  box-shadow:0 -12px 24px rgba(0,0,0,.08);padding:24px 20px 34px;display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+.sx-promo-sheet .prova{display:flex;align-items:center;gap:12px}
+.sx-promo-sheet .avs{display:flex}
+.sx-promo-sheet .avs img{width:44px;height:44px;margin:-2px;border-radius:999px;object-fit:cover}
+.sx-promo-sheet .avs img + img{margin-left:-22px}
+.sx-promo-sheet .tx p{margin:0;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-promo-sheet .tx b{font-weight:590;color:var(--pz-ink)}
+
+/* Seguro PhizChat · 3 pontos (2449:43337) */
+/* o degradê sobe por trás da status bar (que é transparente) */
+.sx-seguro{position:relative;margin-top:-62px;padding-top:62px;background:linear-gradient(180deg,#E6F4C9 0%,rgba(230,244,201,0) 44%),#fff}
+.sx-seguro .pg-body{background:transparent}
+.sx-glass-back{
+  position:absolute;top:128px;left:20px;z-index:4;width:40px;height:40px;border-radius:999px;cursor:pointer;
+  border:1px solid #fff;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  box-shadow:0 4px 12px rgba(0,0,0,.12);color:var(--pz-ink);display:flex;align-items:center;justify-content:center;
+}
+.sx-seguro-body{padding:6px 0 16px}
+.sx-seguro-topo{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:0 20px}
+.sx-medalha-xl{align-self:center;width:268px;height:256px;object-fit:contain;filter:drop-shadow(0 18px 30px rgba(0,0,0,.12));animation:sxMedalha .6s cubic-bezier(.2,1.25,.4,1) both}
+.sx-seguro-topo h1{margin:0;font-family:var(--pz-pop);font-weight:600;font-size:32px;line-height:40px;letter-spacing:-1px;color:var(--pz-ink)}
+.sx-pontos{display:flex;flex-direction:column;padding:20px 20px 0}
+.sx-ponto{display:flex;gap:16px;align-items:flex-start;padding:8px 0;animation:sgEntra .3s var(--sg-out) both}
+.sx-ponto .ic{width:40px;height:40px;border-radius:16px;background:rgba(0,0,0,.08);color:var(--pz-ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sx-ponto .tx{display:flex;flex-direction:column;min-height:40px;justify-content:center}
+.sx-ponto .t{font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px;color:var(--pz-ink)}
+.sx-ponto .s{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-rodape{flex-shrink:0;display:flex;flex-direction:column;gap:12px;padding:16px 20px 30px}
+.sx-rodape .sg-btn{font-size:15px;letter-spacing:0}
+.sx-sinistro{background:none;border:0;cursor:pointer;padding:8px;font-family:var(--pz-pop);font-weight:600;font-size:15px;color:var(--pz-critical)}
+
+/* Aviso no topo da conversa (2327:28076 · 157:8978) */
+.sx-aviso{position:relative;height:0;z-index:5;display:flex;justify-content:center}
+/* Tag 2327:28644: padding 8, Medal 16 + texto (gap 4), link a 12px, borda #D0D1C4.
+   Recorta o conteúdo como no Figma: a fita da medalha termina na borda da tag. */
+.sx-aviso-in{
+  position:absolute;top:10px;display:inline-flex;align-items:center;gap:4px;padding:8px;
+  overflow:clip;background:#fff;border:1px solid #D0D1C4;border-radius:999px;box-shadow:0 4px 8px rgba(0,0,0,.12);cursor:pointer;white-space:nowrap;
+  font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-ink);
+  transition:transform .34s cubic-bezier(.2,.9,.25,1), opacity .24s ease-out;
+}
+.sx-aviso-in .l{color:#169343;font-weight:590;margin-left:8px}
+.sx-aviso.espera .sx-aviso-in,.sx-aviso.fechado .sx-aviso-in{transform:translateY(-24px);opacity:0;pointer-events:none}
+.sx-aviso.aberto .sx-aviso-in{transform:none;opacity:1}
+.sx-st-ver{display:inline-flex;align-items:center;gap:4px}
+
+/* Folha da conversa (2342:34060 · 2342:34139) */
+.sx-folha{padding:20px 20px 34px}
+.sx-folha .sg-sheet-x{top:20px;right:20px}
+.sx-folha-topo{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:44px}
+.sx-medalha-folha{width:219px;height:209px;object-fit:contain;filter:drop-shadow(0 18px 30px rgba(0,0,0,.12));animation:sxMedalha .5s cubic-bezier(.2,1.25,.4,1) .1s both}
+.sx-medalha-folha.prata{opacity:.64}
+.sx-folha-topo h2{margin:0;text-align:center;font-family:var(--pz-pop);font-weight:600;font-size:24px;line-height:32px;letter-spacing:-1px;color:var(--pz-ink)}
+.sx-par{margin-top:16px;display:flex;align-items:center;justify-content:space-between;padding:24px;border-radius:24px;border:1px solid #BD5C3B;background:#FEFAE7}
+.sx-par.ok{border-color:#1679E2;background:#E6F2FF}
+.sx-par .meio{width:40px;height:40px;border-radius:16px;background:#F7E99E;color:#8A6100;display:flex;align-items:center;justify-content:center}
+.sx-par.ok .meio{background:#9AC9FB}
+.sx-pessoa{width:101px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.sx-pessoa img:first-child{width:56px;height:56px;border-radius:999px;object-fit:cover;border:1px solid rgba(204,205,190,.4)}
+.sx-pessoa .n{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-ink);max-width:101px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sx-pessoa .v{display:inline-flex;align-items:center;gap:2px;font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-pessoa .v img{width:16px;height:16px}
+.sx-pessoa .v.ok{color:#1679E2}
+.sx-apolice{margin:4px 0 0;text-align:center;font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-folha-p{margin:24px 0 0;text-align:center;font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-folha-p b{color:var(--pz-ink)}
+.sx-folha-btns{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.sx-folha-btns .sg-btn{font-size:15px;letter-spacing:0}
+
+/* Eu (57:13715 · 2432:41369) */
+/* Pílula "Seguro Grátis" (2497:13836): toca uma vez ao abrir, 6s.
+   1s fechada só com a medalha → abre em 0,5s → aos 1,5s a tag "novo" entra com
+   um brilho → 5s começa a fechar → volta a ficar só a medalha aos 6s. */
+.sx-me-pill{position:relative;flex-shrink:0;height:40px;padding:0;border:0;background:none;cursor:pointer}
+.sx-me-pill .in{
+  display:flex;align-items:center;gap:8px;height:40px;width:40px;padding:8px 12px 8px 8px;box-sizing:border-box;
+  border-radius:999px;background:var(--pz-surface);animation:sxPillW 6s both;
+}
+/* Medal (2004:13250): caixa de 24px; a arte de 40px sai pra cima e pra baixo dela */
+.sx-pill-medal{position:relative;flex-shrink:0;width:24px;height:24px}
+.sx-pill-medal img{position:absolute;left:-11.7px;top:-6.9px;width:47.8px;height:47.8px;max-width:none}
+.sx-pill-medal.p16{width:16px;height:16px}
+.sx-pill-medal.p16 img{left:-7.8px;top:-4.6px;width:31.9px;height:31.9px}
+.sx-me-pill .tx{display:flex;width:0;overflow:hidden;flex-shrink:0;animation:sxPillTx 6s both}
+.sx-me-pill .tx span{white-space:nowrap;font-family:var(--pz-sf);font-weight:590;font-size:15px;line-height:20px;letter-spacing:-.5px;color:#000}
+@keyframes sxPillW{
+  0%,16.667%{width:40px;animation-timing-function:cubic-bezier(.74,0,.32,1)}
+  25%,83.333%{width:147px;animation-timing-function:cubic-bezier(.74,0,.32,1)}
+  100%{width:40px}
+}
+@keyframes sxPillTx{
+  0%,16.667%{width:0;animation-timing-function:cubic-bezier(.74,0,.32,1)}
+  25%,83.333%{width:95px;animation-timing-function:cubic-bezier(.74,0,.32,1)}
+  100%{width:0}
+}
+.sx-me-novo{
+  position:absolute;top:-4px;right:-9px;width:33px;height:14px;border-radius:999px;overflow:hidden;pointer-events:none;
+  animation:sxNovo 6s both;
+}
+.sx-me-novo .lb{
+  display:flex;align-items:center;justify-content:center;height:14px;padding:0 4px;border-radius:999px;background:#19B852;
+  font-family:var(--pz-sf);font-weight:590;font-size:11px;line-height:16px;letter-spacing:-.5px;color:#fff;
+}
+.sx-me-novo .flare{position:absolute;top:-8px;left:5.8px;width:4px;height:29px;background:#fff;transform:translateX(-19px) rotate(-24deg);animation:sxNovoFlare 6s both}
+@keyframes sxNovo{
+  0%,25%{clip-path:inset(0 100% 0 0);transform:none;animation-timing-function:cubic-bezier(0,0,.27,1)}
+  33.333%,91.667%{clip-path:inset(0 0 0 0);transform:none;animation-timing-function:cubic-bezier(0,0,.27,1)}
+  100%{clip-path:inset(0 0 0 100%);transform:translateX(-19px)}
+}
+@keyframes sxNovoFlare{
+  0%,25%{transform:translateX(-19px) rotate(-24deg);animation-timing-function:cubic-bezier(0,0,.27,1)}
+  33.333%,100%{transform:translateX(30px) rotate(-24deg)}
+}
+/* Editar e QR no padrão secundário (fundo neutro, sem sombra), como a pílula */
+.sg-me-bar .pg-iconbtn{background:var(--pz-surface);box-shadow:none}
+/* Seguro ativo: a pílula fechada, parada (mesma medalha e posição de .sx-me-pill) */
+.sx-me-medal{flex-shrink:0;width:40px;height:40px;padding:8px;box-sizing:border-box;border-radius:999px;border:0;background:var(--pz-surface);display:flex;align-items:center;cursor:pointer}
+.sx-me-ver{display:inline-flex;align-items:center;gap:4px;font-family:var(--pz-sf);font-size:15px;color:var(--pz-note)}
+.sg-me-card .sg-nivel{cursor:pointer}
+.sg-me-card.sx-so-nivel{background:#fff;box-shadow:0 0 0 4px var(--pz-surface) inset}
+.sg-me-card.sx-so-nivel .sg-barras{padding-bottom:16px}
+
+/* Segurança da Conta (48:12289 · 48:11344) */
+.sx-sugerido{flex-shrink:0;border-radius:999px;padding:3px 12px;border:1px solid #D0D1C4;background:#E8FDF4;color:#196949;font-family:var(--pz-sf);font-weight:590;font-size:13px;line-height:16px;letter-spacing:-.5px}
+.sx-nivel-bloco{margin-top:28px;display:flex;flex-direction:column;gap:8px;border-radius:24px;overflow:hidden;background:var(--pz-surface)}
+.sx-nivel-card{display:flex;align-items:center;gap:8px;margin:4px 4px 0;padding:12px;border-radius:20px;background:#fff}
+.sx-nivel-card .sg-nivel-ic{width:30px;height:32px;flex-shrink:0;clip-path:path("M15 0 2.3 4.6v10.3c0 8 5.7 14.5 12.7 17.1 7-2.6 12.7-9.1 12.7-17.1V4.6L15 0Z")}
+.sx-nivel-card .tx{flex:1;display:flex;flex-direction:column;gap:8px}
+.sx-nivel-card .t{font-family:var(--pz-pop);font-weight:600;font-size:15px;line-height:18px;letter-spacing:-1px;color:var(--pz-ink)}
+.sx-nivel-card .sg-barras i{border-radius:0}
+.sx-nivel-card .sg-barras{border-radius:8px;overflow:hidden}
+.sx-nivel-help{margin:4px 0 4px;padding:0 16px;font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-nivel-lista{background:#fff}
+.sx-nivel-lista .sg-item{border-radius:4px}
+.sx-nivel-lista .sg-item:first-child{border-radius:0 0 4px 4px}
+.sx-nivel-lista .sg-item:last-child{border-radius:4px 4px 0 0}
+.sx-nivel-lista .sg-ok{width:24px;height:24px}
+.sx-seg-card{
+  width:100%;margin:16px 0 0;display:flex;align-items:center;gap:12px;padding:16px;border-radius:24px;cursor:pointer;text-align:left;
+  border:1px solid transparent;color:var(--pz-ink);
+  background:linear-gradient(#fff,#fff) padding-box,linear-gradient(100deg,#7ED957 0%,#26D465 25%,#1679E2 75%) border-box;
+  box-shadow:0 0 16px rgba(38,212,101,.16);
+}
+.sx-seg-card-ic{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:var(--pz-surface);display:flex;align-items:center;justify-content:center}
+.sx-seg-card .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sx-seg-card .t{font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sx-seg-card .s{font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-seg-ativo .tx{flex:1;display:flex;flex-direction:column}
+.sx-seg-ativo{margin-top:16px;display:flex;align-items:center;gap:12px;padding:12px 20px 12px 16px;border-radius:24px;background:var(--pz-surface);cursor:pointer}
+.sx-seg-ativo .t{font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sx-seg-ativo .s{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-note)}
+
+@media (prefers-reduced-motion: reduce){
+  .sx-promo,.sx-promo-scrim,.sx-promo-arte .medalha,.sx-promo-arte .sp,.sx-promo-copy,.sx-medalha-xl,.sx-ponto,
+  .sx-medalha-folha{animation:none!important}
+  .sx-me-pill .in,.sx-me-pill .tx,.sx-me-novo,.sx-me-novo .flare{animation:none!important}
+  .sx-me-pill .in{width:147px}.sx-me-pill .tx{width:95px}.sx-me-novo{display:none}
+  .sx-aviso-in{transition:none!important}
+}
+
+/* ── Reduzir movimento ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  .sg-shield .arcos,.sg-shield .miolo,.sg-glass-seg.pulsa,.sg-sheet,.sg-scrim,.sg-toast,.sg-preenche,
+  .sg-entra,.sg-stagger .sg-item,.sg-print,.sg-tick-i,.sg-check-pop,.sg-banner-in,
+  .sg-sacode-0 .sg-field.erro,.sg-sacode-1 .sg-field.erro{animation:none!important}
+  .sg-banner,.sg-switch,.sg-switch::after,.sg-field .lb{transition:none!important}
+}
+
+/* Pós-verificação (2357:37771): a promo em tela cheia, verde atrás da status bar */
+.sx-pos{position:relative;margin-top:-62px}
+.sx-promo.sx-promo-full{flex:1;height:auto;max-height:none;border-radius:0;animation:none;
+  background:linear-gradient(180deg,#0A5A28 0%,#127A37 45%,#19A84A 100%)}
+/* o texto fica preso acima da folha; a arte ocupa o resto, como no Figma */
+.sx-promo-full .sx-promo-arte{top:56px}
+.sx-promo-full .sx-promo-copy{top:auto;bottom:252px;padding:0 20px}
+.sx-promo-full .sx-promo-copy p{max-width:350px}
+.sx-promo-full .sx-promo-sheet{animation:sgEntra .4s var(--sg-out) .2s both}
+.sx-pos-btns{align-self:stretch;display:flex;flex-direction:column;gap:12px}
+.sx-pos-btns .sg-btn{font-size:15px;letter-spacing:0}
+
+/* Seguro · verificação em análise (2497:28016) */
+.sx-analise{margin:16px 20px 0;display:flex;align-items:center;gap:12px;padding:16px;border-radius:24px;background:#FBF1C4;border:1px solid #F2E08F}
+.sx-analise .ic{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:#B8930F;color:#fff;display:flex;align-items:center;justify-content:center}
+.sx-analise .tx{display:flex;flex-direction:column;gap:2px}
+.sx-analise .t{font-family:var(--pz-pop);font-weight:600;font-size:15px;line-height:18px;letter-spacing:-.8px;color:var(--pz-ink)}
+.sx-analise .s{font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note)}
+
+/* Verificação de identidade (sx-kyc.jsx · 2165:24176 → 2165:24212) */
+.sxk{position:relative;background:#fff}
+.sxk-back{top:74px}
+.sxk-body{display:flex;flex-direction:column;align-items:center;padding:16px 0 16px}
+.sxk-ilustra{width:200px;height:200px;object-fit:contain;animation:sxMedalha .5s cubic-bezier(.2,1.25,.4,1) both}
+.sxk-h{margin:24px 20px 0;max-width:300px;text-align:center;font-family:var(--pz-pop);font-weight:600;font-size:32px;line-height:40px;letter-spacing:-1px;color:var(--pz-ink)}
+.sxk-p{margin:8px 20px 0;text-align:center;font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-note)}
+.sxk-info{align-self:stretch;display:flex;flex-direction:column;padding:16px 20px 0}
+.sxk-info-item{display:flex;align-items:center;gap:16px;padding:8px 0}
+.sxk-info-item .ic{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:#E6F4C9;display:flex;align-items:center;justify-content:center}
+.sxk-info-item .ic img{width:24px;height:24px}
+.sxk-info-item .t{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-note)}
+.sxk-rodape{background:#fff}
+.sxk-apoio{margin:0 0 4px;text-align:center;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sxk-dados{align-self:stretch;margin-top:24px}
+.sxk-body > .sg-pad{align-self:stretch}
+
+.sxk-form{display:flex;flex-direction:column;gap:20px;padding-top:12px}
+.sxk-nac{display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:24px;background:var(--pz-surface);cursor:pointer;color:var(--pz-note)}
+.sxk-nac .flag{font-size:24px;line-height:1}
+.sxk-nac .tx{flex:1;display:flex;flex-direction:column}
+.sxk-nac .t{font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sxk-nac .s{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-note)}
+.sxk-campo{position:relative;display:block;height:48px;border:1px solid var(--pz-ink);border-radius:12px;padding:0 16px}
+.sxk-campo .lb{position:absolute;top:-9px;left:12px;padding:0 4px;background:#fff;font-family:var(--pz-sf);font-weight:590;font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sxk-campo input{width:100%;height:100%;border:0;outline:0;background:none;font-family:var(--pz-sf);font-size:17px;letter-spacing:-.5px;color:var(--pz-ink)}
+
+/* SDK da Jumio: imagem do Figma + áreas de toque por cima */
+.sxk-sdk{position:absolute;inset:0;background:#fff;overflow:hidden}
+/* a tela do SDK tem o mesmo tamanho do aparelho (393×852) */
+.sxk-sdk img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.sxk-sdk img.foto{object-fit:cover}
+.sxk-ok{opacity:0;transition:opacity .25s ease-out}
+.sxk-ok.on{opacity:1}
+.sxk-hot{position:absolute;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sxk-hot.volta{top:44px;left:0;width:96px;height:72px}
+.sxk-hot.start{left:40px;right:40px;bottom:8px;height:56px;border-radius:999px}
+.sxk-hot.start:active{background:rgba(0,0,0,.08)}
+
+@media (prefers-reduced-motion: reduce){
+  .sxk-ilustra{animation:none}
+  .sxk-ok{transition:none}
+}
+
+/* Aparelho sempre em 393×852 (o frame do Figma), escalado inteiro pra caber
+   na janela. --sx-esc é calculado no app.jsx a cada resize do .shell. */
+.device{width:393px;height:852px;max-height:none;flex-shrink:0;zoom:var(--sx-esc,1)}
+.phiz-proto-note{flex-shrink:0;max-width:393px}
+
+/* Pílula do seguro sobre a foto do contato: fundo branco */
+.sx-me-pill.claro .in,.sx-me-medal.claro{background:#fff}
+
+/* Página de contato (339:42491): fundo branco, linhas cinza separadas por 2px como no app */
+.sx-ct{background:#fff}
+.sx-ct .pz-ct-top .bar{gap:8px}
+.sx-ct-acts .pz-ct-act{border:0;background:var(--pz-surface)}
+.sx-ct-recado{min-height:72px;padding:16px 20px;border-radius:24px;background:var(--pz-surface);font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-ct-grp{margin-top:20px}
+.sx-ct .sg-secao + .sg-pad .sx-ct-grp{margin-top:0}
+.sx-ct .sg-item .ic{color:var(--pz-ink)}
+.sx-ct .sg-item.critico .ic{color:var(--pz-critical)}
+.sx-ct-add{width:40px;height:40px;border-radius:16px;background:rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center}
+/* foto recortada como no Figma (233% da caixa, deslocada) */
+.sx-ct .pz-ct-top .bg.sx-ct-foto{inset:auto;left:-66.54%;top:-11.45%;width:233.08%;height:233.08%;max-width:none;object-fit:cover}
+.sx-ct-selo{width:14px;height:14px}
+
+/* Convite pra verificar (cenário 1) */
+.sx-convite-folha{padding-top:40px}
+.sx-convite-folha h2{margin:0;max-width:260px;font-family:var(--pz-pop);font-weight:600;font-size:24px;line-height:32px;letter-spacing:-1px;color:var(--pz-ink)}
+.sx-convite-folha p{margin:12px 0 0;font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-note)}
+.sx-convite-folha .sx-folha-btns{margin-top:32px}
+/* Mensagem de convite enviada: o cartão de mensagem rica, do lado de quem envia */
+.sx-msg-convite .pz-biz{background:var(--pz-sent)}
+.sx-msg-convite .pz-biz .rabo{left:auto;right:-10px;transform:scaleX(-1)}
+.sx-msg-convite .pz-biz-time{display:flex}
+.sx-msg-convite .pz-biz-cta{border-top-color:rgba(0,0,0,.1)}
+.sx-msg-convite{animation:sgEntra .3s var(--sg-out) both}
+.sx-msg-convite .pz-biz-time .h{padding:0;font-size:13px;font-weight:400;line-height:16px;letter-spacing:-.5px;color:#666}
+.sx-msg-convite .pz-biz-time{align-items:center;gap:2px}

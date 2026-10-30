@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Seguro contra golpes</title>
+  <link rel="icon" href="../shared/assets/logomark-green.svg"/>
+  <script>
+    // Protótipo em iteração: nada de cache nos arquivos locais.
+    // Ordem das folhas: hifi-styles → config-shell → phiz-ui → styles (o protótipo).
+    window.__V = Date.now();
+    window.__SHARED = "../shared/";
+    window.__PROTO_NOTE = {
+      pt: "Protótipo — Seguro PhizChat contra golpes",
+      en: "Prototype — PhizChat scam insurance"
+    };
+    document.write(
+      ['hifi-styles.css', 'config-shell.css', 'phiz-ui.css'].map(function (f) {
+        return '<link rel="stylesheet" href="' + window.__SHARED + f + '?v=' + window.__V + '"/>';
+      }).join('') +
+      '<link rel="stylesheet" href="styles.css?v=' + window.__V + '"/>'
+    );
+  </script>
+
+  <!-- Poppins só em títulos; o resto é SF Pro (fonte do sistema) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"/>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+</head>
+<body>
+  <div id="journeys-sidebar"></div>
+  <div id="root"></div>
+
+  <script>
+    (function () {
+      var v = "?v=" + window.__V, S = window.__SHARED;
+      var plain = [["i18n-mini.js", 1], ["flows.js", 0]];
+      var babel = [
+        ["wf-icon.jsx", 1], ["tweaks-panel.jsx", 1], ["proto-nav.jsx", 1], ["hifi-shared.jsx", 1],
+        ["config-shell.jsx", 1], ["phiz-ui.jsx", 1],
+        ["sg-base.jsx", 0], ["sx-telas.jsx", 0],
+        ["sx-kyc.jsx", 0],
+        ["app.jsx", 0], ["journeys-sidebar.jsx", 1]
+      ];
+      plain.forEach(function (f) {
+        document.write('<script src="' + (f[1] ? S : "") + f[0] + v + '"><\/script>');
+      });
+      babel.forEach(function (f) {
+        document.write('<script type="text/babel" src="' + (f[1] ? S : "") + f[0] + v + '"><\/script>');
+      });
+    })();
+  </script>
+</body>
+</html>

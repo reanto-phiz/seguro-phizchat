@@ -1,0 +1,413 @@
+/* ============================================================================
+   shared/phiz-ui.css — a base de UI do PhizChat, medida do Figma.
+   Serve pra qualquer protótipo: carregue DEPOIS do hifi-styles.css.
+
+   Fontes da verdade (set/2026):
+     · Redesign Chats (Njtv9YG3qdWWZ90uEn0ty4)
+         Chat Screen  14707:26235 (template "[Template] Chat Screen")
+         Chat list    6043:69784  ("Home")
+     · Discover · Mobile App (Vb3ykZcc48DMYGRovpRcyn)
+         Tab bar nova 725:32773 → componente NavigationBar 1186:7114
+           (Chats · Ligações · Descobrir · Contatos · Eu, ícones Filled)
+
+   Tipografia do arquivo:
+     · SF Pro — tudo que é sistema (status bar, lista, composer, header status)
+     · Google Sans Flex — SÓ o conteúdo da conversa (bolha 17/20, hora 13/16,
+       bolha de sistema 13/16, etiqueta de data 13/16)
+     · Poppins SemiBold — nome no cabeçalho da conversa (17/20, -1) e títulos
+   Ícones: SVGs do arquivo em assets/chat e assets/navbar, pintados por
+   mask-image (a cor vem de `color`), então o mesmo arquivo serve ativo/inativo.
+   ============================================================================ */
+
+:root{
+  --pz-sf: -apple-system, "SF Pro Text", "SF Pro", BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  /* 30/09/2026: decisão do time de Design — SF Pro em TODO lugar, inclusive nas bolhas
+     (a Google Sans Flex renderizava mal). A variável continua com o nome antigo
+     pra não quebrar as regras abaixo, mas aponta pro SF. */
+  --pz-gsf: -apple-system, "SF Pro Text", "SF Pro", BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --pz-pop: "Poppins", -apple-system, system-ui, sans-serif;
+
+  --pz-ink: #141414;                 /* content/neutral/dynamic/a */
+  --pz-note: #666666;                /* content/neutral/dynamic/b */
+  --pz-line: rgba(204,205,190,.4);   /* border/neutral/dynamic/a */
+  --pz-line-b: #D0D1C4;              /* border/neutral/dynamic/b */
+  --pz-surface: #F5F5F5;             /* background/neutral/dynamic/b */
+  --pz-weak: rgba(0,0,0,.04);        /* background/opacity/dark/dynamic/a */
+  --pz-brand: #19B852;               /* background/brand/dynamic/b */
+  --pz-brand-ink: #169343;           /* content/brand/base */
+  --pz-blue: #1679E2;                /* selo verificado / lido */
+  --pz-critical: #CF293F;
+
+  --pz-chat-bg: #F6F1EA;             /* chat screen/bg-chat */
+  --pz-sent: #D9FDD4;                /* chat screen/bg-bubble-sent */
+  --pz-received: #FFFFFF;            /* chat screen/bg-bubble-received */
+  --pz-warning: #FBF2C2;             /* background/warning/dynamic/a */
+}
+
+/* ── Ícone pintado por máscara ─────────────────────────────────────────── */
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.pz-btx p,.pz-rich-txt{letter-spacing:-.5px}
+
+.pz-ic{
+  display:inline-block;flex-shrink:0;width:24px;height:24px;background-color:currentColor;
+  -webkit-mask:var(--src) center/contain no-repeat;mask:var(--src) center/contain no-repeat;
+}
+
+/* ── Status bar (Safe Area - Status bar: pt21 pb19, SF Semibold 17/22) ─── */
+.statusbar{
+  height:62px;padding:0 30px 0 38px;font-family:var(--pz-sf);font-size:17px;line-height:22px;
+  font-weight:590;letter-spacing:-.4px;color:var(--pz-ink);
+  display:flex;align-items:center;justify-content:space-between;
+}
+/* Hora no canto esquerdo e ícones no canto direito, ladeando a Dynamic Island */
+.statusbar > div{display:flex;align-items:center}
+.statusbar > div:first-child{padding-top:1.5px}
+.statusbar .right{gap:7px}
+.statusbar.dark{color:#fff}
+
+/* Home indicator do arquivo: 144x5, #141414, 8 do fundo */
+.home-bar{width:144px;height:5px;background:var(--pz-ink);border-radius:100px;bottom:8px}
+
+/* ── Tab bar nova (NavigationBar 1186:7114) ─────────────────────────────
+   pt20 px12 · container 72 (padding 4) · 5 itens flex 1, 64 de altura, gap 2
+   GlassMask: fundo branco + blur 6 + borda 1 branca + inner shadow 12 #0000000A
+   Container: drop-shadow 0 4 12 #0000001F
+   Selected Mask: rgba(0,0,0,.08) + blur 4, pílula do tamanho do item
+   Rótulo: SF Pro 590 11/16 -0.5 · ativo #169343 (ícone também)
+   Tag: 20 de altura, min 20, px4, #19B852, SF 13/16, top 4, centro +14px
+   GradientMask: #F5F5F5 → transparente, blur 8 */
+.pz-nav{
+  position:absolute;left:0;right:0;bottom:0;z-index:25;
+  padding:20px 12px 0;display:flex;flex-direction:column;
+}
+.pz-nav::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(0deg,#F5F5F5 0%,#F5F5F5 30%,rgba(245,245,245,0) 100%);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  -webkit-mask:linear-gradient(0deg,#000 55%,transparent);mask:linear-gradient(0deg,#000 55%,transparent);
+}
+.pz-nav-box{
+  position:relative;display:flex;align-items:center;padding:4px;border-radius:1000px;
+  background:rgba(255,255,255,.9);
+  -webkit-backdrop-filter:blur(6px) saturate(1.4);backdrop-filter:blur(6px) saturate(1.4);
+  border:1px solid #fff;
+  box-shadow:0 4px 12px rgba(0,0,0,.12), inset 0 0 12px rgba(0,0,0,.04);
+}
+.pz-nav-sel{
+  position:absolute;top:4px;height:64px;border-radius:999px;background:rgba(0,0,0,.08);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  transition:left .32s cubic-bezier(.2,1,.3,1), width .32s cubic-bezier(.2,1,.3,1);
+}
+.pz-nav-item{
+  flex:1 0 0;min-width:0;height:64px;position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  color:var(--pz-ink);cursor:pointer;background:none;border:0;padding:0 4px;
+}
+.pz-nav-item .lb{
+  font-family:var(--pz-sf);font-weight:590;font-size:11px;line-height:16px;letter-spacing:-.5px;white-space:nowrap;
+}
+.pz-nav-item.on{color:var(--pz-brand-ink)}
+.pz-nav-item:active .pz-ic{transform:scale(.9)}
+.pz-nav-item .pz-ic{transition:transform .15s}
+.pz-nav-tag{
+  position:absolute;top:4px;left:calc(50% + 14px);transform:translateX(-50%);
+  height:20px;min-width:20px;padding:0 4px;border-radius:1000px;background:var(--pz-brand);color:#fff;
+  font-family:var(--pz-sf);font-size:13px;line-height:20px;letter-spacing:-.5px;text-align:center;
+}
+.pz-nav-home{height:21px;flex-shrink:0}
+
+/* ── App bar da lista de conversas (Home 6043:69784) ─────────────────── */
+.pz-appbar{flex-shrink:0;background:#fff}
+.pz-appbar-row{display:flex;align-items:center;gap:12px;padding:12px 20px}
+.pz-appbar-row .sp{flex:1}
+.pz-ibtn{
+  width:40px;height:40px;border-radius:1000px;display:flex;align-items:center;justify-content:center;
+  background:var(--pz-weak);color:var(--pz-ink);flex-shrink:0;border:0;cursor:pointer;
+}
+.pz-ibtn.brand{background:var(--pz-brand);color:#fff}
+.pz-ibtn.clear{background:none}
+.pz-ibtn:active{filter:brightness(.94)}
+.pz-logo{padding:8px 20px 12px;height:60px;display:flex;align-items:center}
+.pz-logo img{height:24px;width:auto;display:block}
+.pz-search{
+  margin:0 16px 16px;height:40px;border-radius:1000px;background:var(--pz-surface);
+  display:flex;align-items:center;gap:8px;padding:0 8px 0 12px;flex-shrink:0;color:var(--pz-note);
+  font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;white-space:nowrap;overflow:hidden;
+}
+
+/* ── Linha da lista (Chat List Item) ─────────────────────────────────────
+   80 de altura · px20 · gap12 · avatar 56 · divisória left 88 right 20
+   Nome SF 590 17/24 · hora e prévia SF 15/20 #666 · hora não lida verde */
+.pz-row{
+  height:80px;display:flex;align-items:center;gap:12px;padding:0 20px;position:relative;
+  background:#fff;cursor:pointer;
+}
+.pz-row:active{background:#FAFAFA}
+.pz-row::after{content:"";position:absolute;left:88px;right:20px;bottom:0;height:1px;background:var(--pz-line)}
+.pz-row.inerte{cursor:default}
+.pz-av{width:56px;height:56px;border-radius:999px;object-fit:cover;flex-shrink:0;display:block;background:var(--pz-surface)}
+.pz-av.letra{display:flex;align-items:center;justify-content:center;color:#fff;
+  font-family:var(--pz-pop);font-weight:600;font-size:24px;letter-spacing:-1px}
+.pz-row-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.pz-row-top,.pz-row-bot{display:flex;align-items:center;gap:8px;min-width:0}
+.pz-row-bot{align-items:flex-start}
+.pz-row-name{
+  display:flex;align-items:center;min-width:0;flex:1;
+  font-family:var(--pz-sf);font-weight:590;font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-ink);
+}
+.pz-row-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pz-row-time{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-note);flex-shrink:0}
+.pz-row-time.nova{color:var(--pz-brand)}
+.pz-row-prev{
+  flex:1;min-width:0;display:flex;align-items:center;gap:4px;
+  font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-note);
+}
+.pz-row-prev .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pz-row-prev b{font-weight:590;letter-spacing:-.3px}
+.pz-row-meta{display:flex;align-items:center;gap:8px;height:20px;flex-shrink:0;color:var(--pz-note)}
+.pz-tag{
+  height:20px;min-width:20px;padding:0 4px;border-radius:1000px;background:var(--pz-brand);color:#fff;
+  font-family:var(--pz-gsf);font-size:13px;line-height:20px;text-align:center;
+}
+
+/* Selo verificado (Verification Badge: 20 dentro de caixa 24) */
+.pz-selo{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--pz-blue)}
+.pz-selo .pz-ic{width:20px;height:20px}
+.pz-selo.sm{width:16px;height:16px}
+
+/* ── Cabeçalho da conversa (Chat header) ──────────────────────────────── */
+.pz-chead{
+  position:relative;z-index:6;flex-shrink:0;background:#fff;
+  border-bottom:1px solid var(--pz-line);box-shadow:0 4px 12px rgba(0,0,0,.08);
+  display:flex;align-items:center;gap:2px;padding:12px 12px 12px 8px;
+}
+.pz-chead-who{flex:1;min-width:0;display:flex;align-items:center;gap:8px;cursor:pointer}
+.pz-chead-who .av{width:40px;height:40px;border-radius:999px;object-fit:cover;flex-shrink:0;background:var(--pz-surface)}
+.pz-chead-who .tx{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.pz-chead-name{
+  display:flex;align-items:center;gap:4px;height:24px;
+  font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px;color:var(--pz-ink);
+  white-space:nowrap;
+}
+.pz-chead-name span{overflow:hidden;text-overflow:ellipsis}
+.pz-chead-st{
+  display:flex;align-items:center;gap:4px;
+  font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note);white-space:nowrap;
+}
+.pz-chead-acts{display:flex;gap:4px;flex-shrink:0}
+.pz-chead .pz-ibtn{background:none}
+.pz-chead .pz-ibtn:active{background:var(--pz-weak)}
+
+/* ── Área da conversa (Chat Container) ────────────────────────────────── */
+.pz-chat-wrap{flex:1;min-height:0;position:relative;display:flex;flex-direction:column}
+.pz-chat{
+  flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;position:relative;
+  background:var(--pz-chat-bg) url(assets/chat/chat-bg-1.svg) 0 0 / 360px 640px repeat;
+  display:flex;flex-direction:column;padding:12px 0;
+}
+.pz-chat::-webkit-scrollbar{width:0}
+.pz-chat-in{margin-top:auto;display:flex;flex-direction:column}
+.pz-g{height:12px;flex-shrink:0}      /* entre grupos */
+.pz-g4{height:4px;flex-shrink:0}      /* dentro do grupo */
+
+/* Bolha de sistema (13/16 GSF, raio 8, padding 8, max 312) */
+.pz-sys{
+  align-self:center;max-width:312px;padding:8px;border-radius:8px;background:#fff;
+  filter:drop-shadow(0 0 .5px rgba(0,0,0,.2));
+  font-family:var(--pz-gsf);font-size:13px;line-height:16px;color:var(--pz-ink);text-align:center;
+}
+.pz-sys.warn{background:var(--pz-warning)}
+.pz-date{
+  align-self:center;height:20px;padding:0 8px;border-radius:1000px;background:#fff;border:1px solid var(--pz-line);
+  display:flex;align-items:center;font-family:var(--pz-gsf);font-size:13px;line-height:16px;color:var(--pz-ink);
+}
+
+/* Bolha (padding 4, raio 16, sombra .5) + rabinho de 16 no último do grupo */
+.pz-brow{display:flex;padding:0 16px}
+.pz-brow.me{justify-content:flex-end}
+.pz-brow.them{justify-content:flex-start}
+.pz-b{
+  position:relative;max-width:320px;padding:4px;border-radius:16px;
+  filter:drop-shadow(0 0 .5px rgba(0,0,0,.16));
+}
+.pz-brow.me .pz-b{background:var(--pz-sent)}
+.pz-brow.them .pz-b{background:var(--pz-received)}
+.pz-b .rabo{position:absolute;bottom:0;width:16px;height:16px;display:block}
+.pz-brow.me .rabo{right:-10px;transform:scaleX(-1)}
+.pz-brow.them .rabo{left:-10px}
+.pz-btx{
+  display:flex;align-items:center;gap:8px;min-height:28px;max-width:312px;padding:2px 2px 2px 8px;
+}
+.pz-btx p{
+  flex:1;min-width:0;margin:0;font-family:var(--pz-gsf);font-size:17px;line-height:20px;color:var(--pz-ink);
+  overflow-wrap:break-word;
+}
+.pz-btx p b{font-weight:600}
+.pz-bst{display:flex;align-items:flex-end;gap:2px;height:24px;flex-shrink:0;align-self:center}
+.pz-bst .h{font-family:var(--pz-gsf);font-size:13px;line-height:16px;color:var(--pz-note);padding-right:2px}
+.pz-bst .ck{width:20px;height:16px;display:flex;align-items:center;justify-content:center}
+.pz-bst .ck .pz-ic{width:20px;height:20px}
+.pz-bst .ck.lida{color:var(--pz-blue)}
+.pz-bst .ck.entregue{color:var(--pz-note)}
+/* rodapé de hora solto (em bolha com conteúdo rico) */
+.pz-bfoot{display:flex;justify-content:flex-end;align-items:flex-end;gap:2px;height:18px;padding:0 2px}
+
+/* Conteúdo rico dentro da bolha (File Bubble Content): prévia com raio 12 no
+   topo + bloco rgba(0,0,0,.04) com raio 12 embaixo, padding 12 */
+.pz-rich{width:284px;display:flex;flex-direction:column}
+.pz-rich-prev{border-radius:12px 12px 0 0;overflow:hidden}
+.pz-rich-box{
+  background:rgba(0,0,0,.04);border-radius:0 0 12px 12px;padding:12px;display:flex;flex-direction:column;gap:2px;
+}
+.pz-rich-box.solo{border-radius:12px}
+.pz-rich-box .t{font-family:var(--pz-gsf);font-weight:600;font-size:15px;line-height:20px;color:var(--pz-ink)}
+.pz-rich-box .d{font-family:var(--pz-gsf);font-size:13px;line-height:16px;color:var(--pz-note)}
+.pz-rich-txt{padding:6px 8px 0;font-family:var(--pz-gsf);font-size:17px;line-height:20px;color:var(--pz-ink)}
+.pz-rich-cta{
+  margin:6px 0 0;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:6px;
+  background:rgba(0,0,0,.04);border:0;cursor:pointer;width:100%;
+  font-family:var(--pz-gsf);font-weight:600;font-size:15px;color:var(--pz-brand-ink);
+}
+.pz-brow.me .pz-rich-cta{background:rgba(255,255,255,.55)}
+.pz-rich-cta:active{filter:brightness(.95)}
+
+/* ── Composer (Message composer) ──────────────────────────────────────── */
+.pz-comp{
+  flex-shrink:0;position:relative;z-index:6;
+  background:rgba(255,255,255,.48);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
+  border-top:1px solid var(--pz-line);padding:4px 8px 25px;display:flex;align-items:center;
+}
+.pz-comp .pz-ibtn{background:none}
+.pz-comp-field{
+  flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:4px 16px 4px 20px;
+  background:#fff;border:1px solid var(--pz-line-b);border-radius:24px;
+}
+.pz-comp-field .ph{
+  flex:1;min-width:0;font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-note);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.pz-comp-field .pz-ic{color:var(--pz-ink)}
+.pz-comp-mic{
+  margin-left:8px;width:36px;height:36px;border-radius:1000px;background:var(--pz-brand);color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;border:0;cursor:pointer;
+}
+
+/* ── Pílula que flutua no topo da conversa enquanto se rola ───────────── */
+.pz-pill{
+  position:absolute;top:10px;left:50%;z-index:5;transform:translate(-50%,-12px) scale(.96);opacity:0;pointer-events:none;
+  display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 12px 0 9px;border-radius:1000px;border:0;cursor:pointer;
+  background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  box-shadow:0 0 0 .5px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.08);
+  font-family:var(--pz-gsf);font-size:13px;line-height:16px;font-weight:600;color:var(--pz-ink);white-space:nowrap;
+  transition:opacity .22s ease, transform .34s cubic-bezier(.2,1.2,.4,1);
+}
+.pz-pill.on{opacity:1;transform:translate(-50%,0) scale(1);pointer-events:auto}
+
+/* ── Letreiro do status do cabeçalho ──────────────────────────────────── */
+.pz-tick{display:block;height:18px;overflow:hidden;position:relative}
+.pz-tick-in{display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.3,1.1,.4,1)}
+.pz-tick-i{height:18px;display:flex;align-items:center;gap:4px;white-space:nowrap;opacity:0;transition:opacity .35s}
+.pz-tick-i.on{opacity:1}
+
+/* ── Página de contato ────────────────────────────────────────────────── */
+/* A página passa por baixo da status bar: o scroll sobe 62 e a foto vai até o topo */
+.pz-ct-scroll{flex:1;min-height:0;overflow-y:auto;margin-top:-62px;background:#F5F5F5}
+.pz-ct-scroll::-webkit-scrollbar{width:0}
+.pz-ct{background:#F5F5F5;min-height:100%;padding-bottom:32px}
+.pz-ct-top{position:relative;height:393px;border-bottom-right-radius:32px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.pz-ct-top .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pz-ct-top .bar{
+  position:relative;display:flex;align-items:center;gap:12px;padding:74px 20px 12px;
+  background:linear-gradient(180deg,rgba(0,0,0,.8),rgba(0,0,0,0));
+}
+.pz-ct-top .bar .sp{flex:1}
+.pz-glass{
+  width:40px;height:40px;border-radius:999px;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:rgba(255,255,255,.48);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  color:var(--pz-ink);box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+.pz-ct-top .txt{position:relative;padding:48px 20px 20px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.8))}
+.pz-ct-top .ap{font-family:var(--pz-pop);font-weight:600;font-size:32px;line-height:40px;letter-spacing:-1px;color:#fff}
+.pz-ct-top .sub{display:flex;align-items:center;gap:12px;font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:#fff}
+.pz-ct-top .sub .div{width:1px;height:12px;background:rgba(255,255,255,.5)}
+.pz-ct-top .sub .ver{display:inline-flex;align-items:center;gap:6px;font-size:15px;line-height:20px;color:#9AC9FB;padding:0 4px}
+.pz-ct-acts{display:flex;gap:8px;padding:20px}
+.pz-ct-act{
+  flex:1 0 0;min-width:0;display:flex;flex-direction:column;gap:16px;padding:12px;border-radius:24px;background:#fff;
+  border:1px solid var(--pz-line);color:var(--pz-brand-ink);cursor:pointer;
+}
+.pz-ct-act > span:not(.pz-ic){font-family:var(--pz-sf);font-weight:590;font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-ink)}
+.pz-lcard{margin:0 20px;background:#fff;border-radius:24px;overflow:hidden}
+.pz-lrow{display:flex;align-items:center;gap:16px;padding:0 20px;color:var(--pz-ink)}
+.pz-lrow.tap{cursor:pointer}.pz-lrow.tap:active{background:#FAFAFA}
+.pz-lrow .c{flex:1;min-width:0;min-height:56px;display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--pz-line)}
+.pz-lrow:last-child .c{border-bottom:0}
+.pz-lrow .lb{flex:1;min-width:0;font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pz-lrow .val{font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.5px;color:var(--pz-note);flex-shrink:0}
+.pz-lrow .c > .pz-ic:last-child{color:var(--pz-note)}
+.pz-lrow.danger{color:var(--pz-critical)}
+.pz-sechead{padding:32px 20px 12px;font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:20px;letter-spacing:-1px;color:var(--pz-ink)}
+
+
+/* ── Share Options (painel do "+", Redesign Chats 9079:12873) ─────────── */
+.pz-comp-wrap{flex-shrink:0;position:relative;z-index:6}
+.pz-comp-wrap.aberto .pz-comp{padding-bottom:4px}
+.pz-share{
+  background:#fff;border-top:1px solid var(--pz-line);border-radius:24px 24px 0 0;
+  height:304px;padding:24px 24px 12px;display:flex;flex-direction:column;gap:16px;
+  animation:pzShareUp .28s cubic-bezier(.2,1,.4,1) both;
+}
+@keyframes pzShareUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.pz-share-row{display:flex;justify-content:space-between}
+.pz-share-it{
+  width:80px;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;padding:0;cursor:pointer;
+}
+.pz-share-it.vazio{cursor:default}
+.pz-share-it .c{
+  position:relative;width:48px;height:48px;border-radius:66px;background:rgba(0,0,0,.04);
+  display:flex;align-items:center;justify-content:center;color:var(--pz-ink);
+}
+.pz-share-it .l{
+  font-family:var(--pz-sf);font-size:11px;line-height:16px;letter-spacing:-.5px;color:var(--pz-ink);
+  text-align:center;min-height:20px;
+}
+.pz-share-it.novo .c{background:#EAF3FE;color:#1679E2;box-shadow:0 0 0 2px #1679E2 inset}
+.pz-share-it .c em{
+  position:absolute;top:-6px;right:-14px;height:16px;padding:0 5px;border-radius:99px;background:#1679E2;color:#fff;
+  font-style:normal;font-family:var(--pz-sf);font-weight:590;font-size:10px;line-height:16px;letter-spacing:-.2px;
+}
+.pz-share-it:active .c{filter:brightness(.94)}
+
+/* ── Mensagem de empresa (Business API) ─────────────────────────────────── */
+.pz-biz{
+  position:relative;width:320px;max-width:100%;background:#fff;border-radius:16px;padding:4px;
+  display:flex;flex-direction:column;filter:drop-shadow(0 0 .5px rgba(0,0,0,.12));
+  font-family:-apple-system,"SF Pro Text","SF Pro",BlinkMacSystemFont,system-ui,sans-serif;color:#141414;
+}
+.pz-biz .rabo{position:absolute;bottom:0;left:-10px;width:16px;height:16px;display:block}
+.pz-biz-media{position:relative;height:176px;border-radius:8px;overflow:hidden;flex:none}
+.pz-biz-media > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pz-biz-text{position:relative;display:flex;flex-direction:column;gap:4px;padding-bottom:8px}
+.pz-biz-text .h{padding:12px 8px 4px;font-weight:600;font-size:17px;line-height:22px;letter-spacing:-.4px}
+.pz-biz-text .b{padding:4px 8px;font-size:17px;line-height:20px;letter-spacing:-.5px}
+.pz-biz-text .f{padding:4px 64px 4px 8px;min-height:24px;font-size:13px;line-height:16px;letter-spacing:-.5px;color:#666}
+.pz-biz-time{position:absolute;right:6px;bottom:6px;font-size:13px;line-height:16px;letter-spacing:-.5px;color:#666;font-variant-numeric:tabular-nums}
+.pz-biz-ctas{display:flex;flex-direction:column;margin:0 -4px -4px}
+.pz-biz-cta{
+  min-height:40px;display:flex;align-items:center;justify-content:center;padding:8px;border:0;border-top:1px solid #D0D1C4;
+  background:none;cursor:pointer;font-family:inherit;font-weight:590;font-size:15px;line-height:20px;letter-spacing:-.5px;color:#169343;
+  transition:background-color .12s ease;
+}
+.pz-biz-cta:last-child{border-radius:0 0 16px 16px}
+.pz-biz-cta:active:not(:disabled){background:rgba(25,184,82,.1)}
+.pz-biz-cta:disabled{color:#BFBFBF;cursor:default}
+
+/* Alerta de contato não verificado (Alert/Warning, Fluxos Bull 9174:62185) */
+.pz-ct-alerta{
+  margin:20px 20px 0;padding:16px;border-radius:24px;background:#FBF2C2;border:1px solid rgba(204,205,190,.4);
+  display:flex;align-items:center;gap:12px;
+}
+.pz-ct-alerta .ic{width:40px;height:40px;border-radius:12px;background:#B59C1C;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pz-ct-alerta .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;color:#141414}
+.pz-ct-alerta b{font-family:var(--pz-pop);font-weight:600;font-size:15px;line-height:18px;letter-spacing:-1px}
+.pz-ct-alerta .tx > span{font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;opacity:.72}

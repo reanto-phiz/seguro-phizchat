@@ -1,0 +1,96 @@
+/* ============================================================================
+   Navigation Bar - Mobile App
+
+   Cópia fiel do Figma "Playground" (DmyZRztViaxmGASgeCN7As):
+     com rótulo  323:6807 — barra 113 · container 12/20, 416x72 · item 81.6x64
+     sem rótulo  323:6855 — barra 101 · container 24/20, 392x60 · item 76.8x52
+
+   Medidas lidas do arquivo:
+     Container: margem lateral 12, y=20, altura 72, raio full (1000), padding 4
+     Navigation Bar Item: 81.6 x 64 — passo 81.6 (x = 4, 85.6, 167.2, 248.8, 330.4)
+     Ícone 24x24 em y=11 · Label em y=37 (altura 16) · Tag 20x20 em x=45, y=4
+     Selected Mask: 81.48 x 64 — a pílula cobre o ITEM INTEIRO, não só o ícone
+     Safe Area - Home Indicator: y=92, 416x21
+
+   Tokens:
+     Glass Mask      fundo #FFFFFFB8 + Phiz Glass (blur 12 + inner shadow #0000000A)
+                     borda 1px em gradiente #FFFFFF → #FFFFFF00
+     Selected Mask   background/neutral/elevated #F5F5F5
+     Elevation/Large 0 4 24 #0000001F
+     Gradient Mask   #F5F5F500 → #F5F5F5, Progressive Background Blur 16
+     Label           Label Small/Emphasized — SF Pro Semibold 11/16 (-0.5)
+     Ativo           ícone #19B852 · rótulo #169343
+     Inativo         #141414
+   ============================================================================ */
+
+/* O Gradient Mask: o conteúdo desaparece por trás da barra em vez de encostar */
+.navbar-wrap{
+  flex-shrink:0;position:relative;padding:20px 12px 0;
+  background:linear-gradient(180deg,#F5F5F500 0%,#F5F5F5 82%);
+  backdrop-filter:blur(16px);
+}
+.navbar-wrap.dark{
+  background:linear-gradient(180deg,#0000 0%,rgba(10,10,10,.72) 82%);
+}
+
+.navbar{
+  height:72px;border-radius:1000px;padding:4px;display:flex;
+  background:#FFFFFFB8;
+  backdrop-filter:blur(12px) saturate(1.4);
+  box-shadow:0 4px 24px #0000001F, inset 0 0 12px #0000000A;
+  border:1px solid transparent;
+  background-image:
+    linear-gradient(#FFFFFFB8,#FFFFFFB8),
+    linear-gradient(180deg,#FFFFFF 0%,#FFFFFF00 100%);
+  background-origin:border-box;
+  background-clip:padding-box,border-box;
+}
+.navbar.dark{
+  background-image:
+    linear-gradient(rgba(28,28,28,.78),rgba(28,28,28,.78)),
+    linear-gradient(180deg,rgba(255,255,255,.34) 0%,#FFFFFF00 100%);
+  box-shadow:0 4px 24px rgba(0,0,0,.5), inset 0 0 12px rgba(255,255,255,.06);
+}
+
+/* O item: ícone em y=11, rótulo em y=37 dentro dos 64 de altura */
+.navbar .item{
+  flex:1;height:64px;border-radius:1000px;position:relative;
+  display:flex;flex-direction:column;align-items:center;
+  padding-top:11px;gap:2px;color:#141414;cursor:pointer;
+  transition:background .2s cubic-bezier(.2,1,.4,1);
+}
+.navbar.dark .item{color:#fff}
+
+/* Selected Mask — cobre o item inteiro */
+.navbar .item.on{background:#F5F5F5}
+.navbar.dark .item.on{background:rgba(255,255,255,.12)}
+.navbar .item.on .lb{color:#169343}
+.navbar.dark .item.on .lb{color:#5BE38C}
+.navbar .item.on .ic{color:#19B852}
+.navbar.dark .item.on .ic{color:#26D465}
+
+.navbar .item .ic{display:flex;align-items:center;justify-content:center;
+  width:24px;height:24px;transition:color .2s}
+.navbar .item .lb{
+  font-family:-apple-system,"SF Pro Text","SF Pro",BlinkMacSystemFont,system-ui,sans-serif;
+  font-weight:590;font-size:11px;line-height:16px;letter-spacing:-.5px;
+  transition:color .2s;
+}
+
+/* Tag — 20x20 em x=45, y=4 dentro do item */
+.navbar .item .tag{
+  position:absolute;left:45px;top:4px;min-width:20px;height:20px;padding:0 5px;
+  border-radius:1000px;background:#19B852;color:#fff;
+  font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;
+  font-weight:700;font-size:11px;line-height:20px;text-align:center;
+}
+
+/* Safe Area - Home Indicator: 21 abaixo do container */
+.navbar-home{height:21px;flex-shrink:0}
+
+/* Variante sem rótulo (323:6855): container 392x60, item 76.8x52, ícone em y=14 */
+.navbar-wrap.compact{padding:20px 24px 0}
+.navbar.compact{height:60px}
+.navbar.compact .item{height:52px;padding-top:14px}
+.navbar.compact .item .lb{display:none}
+.navbar.compact .item .tag{left:42px}
