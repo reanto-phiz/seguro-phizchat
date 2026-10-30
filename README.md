@@ -13,6 +13,10 @@ python3 -m http.server 8742
 
 Depois acesse http://localhost:8742/seguro/
 
+## Publicado
+
+Na Vercel, a raiz do site redireciona para `/seguro/` (`vercel.json`).
+
 ## Estrutura
 
 - `seguro/` — o protótipo: telas (`sx-telas.jsx`, `sx-kyc.jsx`), rotas (`app.jsx`),
