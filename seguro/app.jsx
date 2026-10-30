@@ -27,6 +27,12 @@ const ROTAS = {
   "verificar-rosto":   { comp: window.SxKyc.SxKycRosto, pais: ["me", "config", "seguranca", "verificar", "verificar-dados"] },
   "verificar-camera":  { comp: window.SxKyc.SxKycCamera, pais: ["me", "config", "seguranca", "verificar", "verificar-dados", "verificar-rosto"] },
   "verificar-analise": { comp: window.SxKyc.SxKycAnalise, pais: ["me", "config", "seguranca", "verificar", "verificar-dados", "verificar-rosto"] },
+  // Abertura de sinistro (sx-sinistro.jsx) — a partir do seguro ativo
+  "sinistro":             { comp: window.SxSinistroTelas.SxSinistro, pais: ["chats", "dicas", "seguro"] },
+  "sinistro-conta":       { comp: window.SxSinistroTelas.SxSinistro, params: { conta: true }, pais: ["chats", "dicas", "seguro"] },
+  "sinistro-preenchido":  { comp: window.SxSinistroTelas.SxSinistro, params: { preenchido: true }, pais: ["chats", "dicas", "seguro"] },
+  "sinistro-enviado":     { comp: SXT.SxSeguro, params: { sinistroAberto: true }, pais: ["chats", "dicas"] },
+  "seguro-chat":          { comp: window.SxSinistroTelas.SxSeguroChat, pais: ["chats", "dicas", "seguro"] },
   // Depois do Concluído
   "verificado":     { comp: SXT.SxVerificado, pais: ["me", "config", "seguranca"] },
   "seguro-analise": { comp: SXT.SxSeguro, params: { analise: true }, pais: ["me", "config", "seguranca"] }

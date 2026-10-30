@@ -651,3 +651,46 @@
 .sx-msg-convite{animation:sgEntra .3s var(--sg-out) both}
 .sx-msg-convite .pz-biz-time .h{padding:0;font-size:13px;font-weight:400;line-height:16px;letter-spacing:-.5px;color:#666}
 .sx-msg-convite .pz-biz-time{align-items:center;gap:2px}
+
+/* Abrir sinistro (346:9620 · 346:9664) */
+.sxs .sg-secao{padding-top:32px}
+.sxs .sg-secao:first-child{padding-top:16px}
+.sxs-campo{position:relative;display:flex;align-items:center;gap:8px;min-height:48px;border:1px solid var(--pz-ink);border-radius:12px;padding:0 12px;cursor:text}
+.sxs-campo input,.sxs-campo textarea{flex:1;min-width:0;border:0;outline:0;background:none;padding:0;resize:none;
+  font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sxs-campo input::placeholder,.sxs-campo textarea::placeholder{color:#BFBFBF}
+.sxs-campo .lucide,.sxs-campo svg{color:var(--pz-ink);flex-shrink:0}
+.sxs-campo.area{align-items:flex-start;padding:12px}
+.sxs-campo .lb{position:absolute;top:-9px;left:8px;padding:0 4px;background:#fff;font-family:var(--pz-sf);font-weight:590;font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sxs-campo:not(.cheio){border-color:#999}
+.sxs-anexos{display:flex;flex-direction:column;gap:8px}
+.sxs-anexos .fila{display:flex;gap:8px;flex-wrap:wrap}
+.sxs-anexos .ajuda{margin:0;font-family:var(--pz-sf);font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-note)}
+.sxs-mais{width:128px;height:128px;border:0;border-radius:24px;background:var(--pz-surface);color:var(--pz-ink);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sxs-mais:active,.sxs-add:active{filter:brightness(.96)}
+.sxs-anexo{position:relative;width:82px;height:148px;border-radius:16px;overflow:hidden;flex-shrink:0;background:var(--pz-surface);animation:sgEntra .24s var(--sg-out) both}
+.sxs-anexo > img{width:100%;height:100%;object-fit:cover;display:block}
+.sxs-remover{position:absolute;top:6px;left:52px;width:24px;height:24px;border-radius:999px;border:1px solid #fff;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 4px 12px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center}
+.sxs-remover img{width:16px;height:16px}
+.sxs-add{width:82px;height:148px;border:0;border-radius:16px;background:var(--pz-surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;flex-shrink:0}
+.sxs-add img{width:24px;height:24px}
+.sxs-add span{font-family:var(--pz-sf);font-weight:590;font-size:13px;line-height:16px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sxs-folha h2{margin:8px 0 0;font-family:var(--pz-pop);font-weight:600;font-size:24px;line-height:32px;letter-spacing:-1px;color:var(--pz-ink)}
+.sxs-folha p{margin:8px 0 20px;font-family:var(--pz-sf);font-size:17px;line-height:24px;letter-spacing:-.5px;color:var(--pz-note)}
+/* Notificação do sistema (push) por cima do seguro */
+.sxs-notif{position:absolute;top:54px;left:10px;right:10px;z-index:90;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:24px;
+  background:rgba(245,245,245,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 8px 24px rgba(0,0,0,.12);
+  animation:sxsDesce .42s cubic-bezier(.2,.9,.25,1) both}
+.sxs-notif.sai{animation:sxsSobe .32s ease-in both}
+.sxs-notif .ic{width:38px;height:38px;border-radius:10px;flex-shrink:0}
+.sxs-notif .tx{flex:1;min-width:0;display:flex;flex-direction:column;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-ink)}
+.sxs-notif .tx b{font-weight:590}
+.sxs-notif .tx span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3C3C43}
+.sxs-notif .h{align-self:flex-start;font-family:var(--pz-sf);font-size:13px;color:#8A8A8E}
+@keyframes sxsDesce{from{transform:translateY(-120%);opacity:0}to{transform:none;opacity:1}}
+@keyframes sxsSobe{to{transform:translateY(-120%);opacity:0}}
+@media (prefers-reduced-motion: reduce){.sxs-notif,.sxs-anexo{animation:none!important}}
+.sxs-notif{cursor:pointer}
+/* Avatar da conta oficial Seguro PhizChat: a medalha num círculo verde-claro */
+.sxs-seguro-av{flex-shrink:0;border-radius:999px;background:#E6F4C9;display:flex;align-items:center;justify-content:center}

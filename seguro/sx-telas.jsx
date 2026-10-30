@@ -419,6 +419,14 @@ function SxSeguro({ params = {} }) {
   const analise = !!params.analise;
   const [toast, setToast] = React.useState(null);
   const avisa = (t) => setToast(t + "·" + Date.now());
+  // Voltando de um sinistro enviado: notificação do sistema + toast (uma vez)
+  const [sinistro] = React.useState(() => {
+    const envio = window.SxSinistroTelas && window.SxSinistroTelas.SXS_ENVIO;
+    const v = !!params.sinistroAberto || !!(envio && envio.aberto);
+    if (envio) envio.aberto = false;
+    return v;
+  });
+  React.useEffect(() => { if (sinistro) avisa("Sinistro aberto com sucesso"); }, []);
   return (
     <window.PhizHiFi.Screen>
       <div className="pg sx-seguro">
@@ -452,9 +460,10 @@ function SxSeguro({ params = {} }) {
               ? <SX.SgBtn onClick={() => avisa("Abre a apólice do seguro")}>Ver apólice</SX.SgBtn>
               : <SX.SgBtn onClick={() => nav.push("verificar")}>Verificar identidade</SX.SgBtn>}
           <SX.SgBtn kind="secondary" icon="external-link" onClick={() => avisa("Abre a página do Seguro PhizChat")}>Mais sobre o seguro</SX.SgBtn>
-          {ativo && !analise && <button className="sx-sinistro" onClick={() => avisa("Abre o pedido de indenização")}>Abrir sinistro</button>}
+          {ativo && !analise && <button className="sx-sinistro" onClick={() => nav.push("sinistro")}>Abrir sinistro</button>}
         </div>
       </div>
+      {sinistro && <window.SxSinistroTelas.SxsNotificacao />}
       {toast && <SX.SgToast key={toast}>{toast.split("·")[0]}</SX.SgToast>}
     </window.PhizHiFi.Screen>
   );

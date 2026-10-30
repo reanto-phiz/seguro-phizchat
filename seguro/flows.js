@@ -79,6 +79,22 @@ window.PHIZ_JOURNEYS = {
         { title: "Folha · só perfis verificados", titleEn: "Sheet · verified profiles only", screen: "sophia-folha@ambos-nao", status: "done" },
         { title: "Contato · Seguro Grátis", titleEn: "Contact · free insurance", screen: "contato@ambos-nao", status: "done" }
       ]
+    },
+    {
+      id: "sinistro", n: 5,
+      title: "Abrir sinistro",
+      titleEn: "File a claim",
+      sub: "Arthur caiu num golpe e pede a indenização pelo seguro",
+      subEn: "Arthur was scammed and files a claim with the insurance",
+      status: "in-progress", color: "#D92D20",
+      steps: [
+        { title: "Meu seguro", titleEn: "My insurance", screen: "seguro@ativo", status: "done" },
+        { title: "Abrir sinistro · vazio", titleEn: "File a claim · empty", screen: "sinistro@ativo", status: "done" },
+        { title: "Folha · quem aplicou o golpe", titleEn: "Sheet · who scammed you", screen: "sinistro-conta@ativo", status: "done" },
+        { title: "Pedido preenchido", titleEn: "Claim filled in", screen: "sinistro-preenchido@ativo", status: "done" },
+        { title: "Sinistro aberto", titleEn: "Claim filed", screen: "sinistro-enviado@ativo", status: "done" },
+        { title: "Conversa · Seguro PhizChat", titleEn: "Chat · Seguro PhizChat", screen: "seguro-chat@ativo", status: "done" }
+      ]
     }
   ]
 };
