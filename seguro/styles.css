@@ -558,8 +558,9 @@
 .sx-promo.sx-promo-full{flex:1;height:auto;max-height:none;border-radius:0;animation:none;
   background:linear-gradient(180deg,#0A5A28 0%,#127A37 45%,#19A84A 100%)}
 /* o texto fica preso acima da folha; a arte ocupa o resto, como no Figma */
-.sx-promo-full .sx-promo-arte{top:56px}
-.sx-promo-full .sx-promo-copy{top:auto;bottom:252px;padding:0 20px}
+/* a fita da medalha passa por trás da tag "Seguro PhizChat" */
+.sx-promo-full .sx-promo-arte{top:124px}
+.sx-promo-full .sx-promo-copy{top:auto;bottom:196px;padding:0 20px;z-index:1}
 .sx-promo-full .sx-promo-copy p{max-width:350px}
 .sx-promo-full .sx-promo-sheet{animation:sgEntra .4s var(--sg-out) .2s both}
 .sx-pos-btns{align-self:stretch;display:flex;flex-direction:column;gap:12px}

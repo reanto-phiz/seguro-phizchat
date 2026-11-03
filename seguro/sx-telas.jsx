@@ -288,16 +288,10 @@ function SxVerificado() {
           <SxPromoArte />
           <div className="sx-promo-copy">
             <span className="chip">Seguro PhizChat</span>
-            <h2>Verificou, ganhou.</h2>
+            <h2>Parabéns!<br />Verificou, ganhou.</h2>
             <p>PhizChat é o único app com seguro contra golpes. Se um perfil falso te enganar, você recebe até R$ 1.000 de volta.</p>
           </div>
           <div className="sx-promo-sheet">
-            <div className="prova">
-              <div className="avs">
-                {["mkt-av1", "mkt-av2", "mkt-av3", "mkt-av1"].map((a, i) => <img key={i} src={"img/" + a + ".png" + SX_V} alt="" />)}
-              </div>
-              <div className="tx"><p><b>+2.270</b> pessoas</p><p>já ganharam o seguro grátis</p></div>
-            </div>
             <div className="sx-pos-btns">
               <SX.SgBtn onClick={() => nav.push("seguro-analise")}>Como funciona o seguro</SX.SgBtn>
               <SX.SgBtn kind="secondary" onClick={depois}>Ver depois</SX.SgBtn>
