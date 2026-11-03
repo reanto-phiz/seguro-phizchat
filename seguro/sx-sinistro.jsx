@@ -223,7 +223,9 @@ function SxsSuporte({ cheio, onFechar, onEnviar }) {
 
 /* Notificação do sistema ao voltar pro seguro: desce, fica ~4s e sobe.
    Tocar nela só some e chama onToque (a tela mostra o snackbar "Abrir email"). */
-function SxsNotificacao({ onToque }) {
+// Padrão: a do sinistro aberto (ícone do Gmail). Endereços reaproveita com o PhizChat.
+function SxsNotificacao({ onToque, icone = "img/ic-gmail.svg" + SX_V, titulo = "Seguro PhizChat",
+  texto = "Seu Sinistro foi aberto e estamos trabalhando nele", rotulo = "Abrir email" }) {
   const [fase, setFase] = React.useState("entra");
   React.useEffect(() => {
     const a = setTimeout(() => setFase("sai"), 4200);
@@ -232,10 +234,10 @@ function SxsNotificacao({ onToque }) {
   }, []);
   if (fase === "fim") return null;
   return (
-    <div className={"sxs-notif " + fase} role="button" aria-label="Abrir email"
+    <div className={"sxs-notif " + fase} role="button" aria-label={rotulo}
       onClick={() => { setFase("fim"); if (onToque) onToque(); }}>
-      <img className="ic" src={"img/ic-gmail.svg" + SX_V} alt="Gmail" />
-      <span className="tx"><b>Seguro PhizChat</b><span>Seu Sinistro foi aberto e estamos trabalhando nele</span></span>
+      <img className="ic" src={icone} alt="" />
+      <span className="tx"><b>{titulo}</b><span>{texto}</span></span>
       <span className="h">9:41 AM</span>
     </div>
   );

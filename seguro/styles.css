@@ -722,3 +722,106 @@
 .sxs-sup-rodape{padding:16px 20px 37px;background:#fff}
 .sxs-sup-rodape .sg-btn:disabled{background:#19B852;color:#fff;opacity:.4}
 @media (prefers-reduced-motion: reduce){.sxs-sup-img{animation:none!important}}
+
+/* ── Webview da apólice (sx-kev.jsx) ─────────────────────────────────────
+   Barra de navegador do app + o bilhete como uma folha de papel */
+.sxw{background:#F2F2F2}
+.sxw-barra{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:6px 12px 10px;background:#fff;border-bottom:.5px solid rgba(0,0,0,.1)}
+.sxw-bt{width:40px;height:40px;border:0;border-radius:999px;background:none;color:var(--pz-ink);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.sxw-bt:active{background:var(--pz-surface)}
+.sxw-url{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;font-family:var(--pz-sf)}
+.sxw-url .t{font-weight:590;font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-ink)}
+.sxw-url .d{display:flex;align-items:center;gap:3px;font-size:12px;line-height:16px;color:var(--pz-note)}
+.sxw-corpo{padding:16px 12px 32px}
+.sxw-doc{background:#fff;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.06);padding:24px 20px 20px;font-family:var(--pz-sf);color:var(--pz-ink)}
+.sxw-doc-topo{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--pz-ink)}
+.sxw-doc-topo .logo{height:20px;width:auto;display:block}
+.sxw-doc-topo .tag{font-size:11px;font-weight:590;letter-spacing:.6px;text-transform:uppercase;color:var(--pz-note)}
+.sxw-doc h1{margin:20px 0 0;font-family:var(--pz-pop);font-weight:600;font-size:20px;line-height:26px;letter-spacing:-.5px}
+.sxw-doc-sub{margin:4px 0 0;font-size:13px;line-height:16px;color:var(--pz-note)}
+.sxw-sec{margin-top:20px;padding-top:16px;border-top:1px solid #E6E6E6}
+.sxw-sec h2{margin:0 0 8px;font-size:11px;font-weight:590;letter-spacing:.6px;text-transform:uppercase;color:var(--pz-note)}
+.sxw-sec dl{margin:0}
+.sxw-linha{display:flex;gap:12px;padding:5px 0;font-size:14px;line-height:19px}
+.sxw-linha dt{flex:0 0 42%;color:var(--pz-note)}
+.sxw-linha dd{flex:1;margin:0;font-weight:510;text-align:right}
+.sxw-tab{width:100%;border-collapse:collapse;font-size:14px;line-height:19px;margin-bottom:6px}
+.sxw-tab th{text-align:left;font-size:12px;font-weight:590;color:var(--pz-note);padding:6px 0;border-bottom:1px solid #E6E6E6}
+.sxw-tab th:last-child,.sxw-tab td:last-child{text-align:right;white-space:nowrap;padding-left:12px}
+.sxw-tab td{padding:8px 0;vertical-align:top}
+.sxw-tab td:last-child{font-weight:590}
+.sxw-lista{margin:0;padding-left:18px;font-size:14px;line-height:20px}
+.sxw-lista li+li{margin-top:6px}
+.sxw-rodape{margin:24px 0 0;padding-top:12px;border-top:1px dashed #D9D9D9;font-size:11px;line-height:15px;color:#999;text-align:center}
+
+/* ── Mini app da Kev Seguros (sx-kev.jsx) ────────────────────────────────
+   Barra com a marca à esquerda e a cápsula ··· | × à direita */
+.sxa-app{background:#fff}
+.sxa-app-barra{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:8px 12px 10px 20px}
+.sxa-app-barra .marca img{height:18px;width:auto;display:block}
+.sxa-capsula{display:flex;align-items:center;height:32px;border-radius:999px;border:.5px solid rgba(0,0,0,.12);background:rgba(255,255,255,.9)}
+.sxa-capsula button{width:44px;height:32px;border:0;background:none;color:var(--pz-ink);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sxa-capsula i{width:.5px;height:18px;background:rgba(0,0,0,.15)}
+.sxa-app-corpo{padding:4px 0 24px;font-family:var(--pz-sf);color:var(--pz-ink)}
+.sxa-hero{margin:8px 16px 0;padding:24px 20px;border-radius:24px;background:#141414;color:#fff}
+.sxa-hero .sxa-chip{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:12px;font-weight:590;line-height:16px}
+.sxa-hero h1{margin:14px 0 0;font-family:var(--pz-pop);font-weight:600;font-size:24px;line-height:30px;letter-spacing:-.8px}
+.sxa-hero p{margin:8px 0 0;font-size:15px;line-height:20px;letter-spacing:-.3px;color:rgba(255,255,255,.72)}
+.sxa-card-seguro{margin:16px 16px 0;padding:20px;border-radius:24px;background:linear-gradient(180deg,#E6F4C9 0%,#F4FAE6 100%);display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.sxa-card-seguro .med{width:72px;height:72px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 6px 12px rgba(0,0,0,.12))}
+.sxa-card-seguro .tx{flex:1;min-width:0}
+.sxa-card-seguro .sobre{font-size:12px;font-weight:590;line-height:16px;color:#3B7A12}
+.sxa-card-seguro h2{margin:2px 0 0;font-family:var(--pz-pop);font-weight:600;font-size:17px;line-height:22px;letter-spacing:-.5px}
+.sxa-card-seguro p{margin:4px 0 0;font-size:14px;line-height:19px;color:#3D3D3D}
+.sxa-card-seguro .sxa-chips{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px}
+.sxa-card-seguro .sxa-chips span{padding:4px 10px;border-radius:999px;background:#fff;font-size:12px;font-weight:590;line-height:16px}
+.sxa-h3{margin:28px 20px 12px;font-family:var(--pz-pop);font-weight:600;font-size:20px;line-height:28px;letter-spacing:-.5px}
+.sxa-passos{list-style:none;margin:0;padding:0 20px;display:flex;flex-direction:column;gap:16px}
+.sxa-passos li{display:flex;gap:14px;align-items:flex-start}
+.sxa-passos .n{width:28px;height:28px;border-radius:999px;background:var(--pz-ink);color:#fff;font-family:var(--pz-pop);font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sxa-passos .tx{display:flex;flex-direction:column;gap:2px;font-size:15px;line-height:20px;letter-spacing:-.3px}
+.sxa-passos .tx b{font-weight:590}
+.sxa-passos .tx span{color:var(--pz-note)}
+.sxa-cobre{margin:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sxa-cobre > div{padding:14px;border-radius:16px;background:var(--pz-surface)}
+.sxa-cobre .h{display:flex;align-items:center;gap:6px;font-weight:590;font-size:14px;line-height:18px}
+.sxa-cobre .sim .h{color:#14853B}
+.sxa-cobre .nao .h{color:var(--pz-critical)}
+.sxa-cobre p{margin:6px 0 0;font-size:13px;line-height:17px;color:#3D3D3D}
+.sxa-faq{margin:0 16px;border-radius:16px;background:var(--pz-surface);overflow:hidden}
+.sxa-faq .item + .item{border-top:.5px solid rgba(0,0,0,.08)}
+.sxa-faq button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:0;background:none;cursor:pointer;font-family:var(--pz-sf);font-size:15px;font-weight:590;line-height:20px;color:var(--pz-ink);text-align:left}
+.sxa-faq button .lucide,.sxa-faq button svg{transition:transform .2s;flex-shrink:0;color:var(--pz-note)}
+.sxa-faq .item.on button svg{transform:rotate(180deg)}
+.sxa-faq p{margin:-4px 0 0;padding:0 16px 14px;font-size:14px;line-height:19px;color:#3D3D3D}
+.sxa-app-cta{padding:28px 20px 0}
+.sxa-app-rodape{margin:16px 20px 0;font-size:12px;line-height:16px;color:#999;text-align:center}
+
+/* ── Novo endereço e Endereços (sx-endereco.jsx · 2399:39569 / 39674) ───── */
+.sxe .sxe-titulo{margin-top:64px}
+.sxe-corpo{display:flex;flex-direction:column;gap:16px;padding:20px 20px 24px}
+.sxe-link{margin-top:8px;padding:0;border:0;background:none;cursor:pointer;font-family:var(--pz-sf);font-weight:590;font-size:15px;line-height:20px;letter-spacing:-.3px;color:var(--pz-brand-ink,#169343)}
+.sxe-dupla{display:flex;gap:12px}
+.sxe-dupla > div{flex:1;min-width:0}
+.sxe-dupla > .num{flex:0 0 120px}
+.sxe-dupla > .uf{flex:0 0 66px}
+.sxe-off{pointer-events:none}
+.sxe-off .sg-field label{background:var(--pz-surface);border-color:transparent}
+.sxe-off .sg-field .lb{background:transparent}
+.sxe-check{display:flex;align-items:center;gap:10px;margin-top:-4px;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.3px;color:var(--pz-ink);cursor:pointer}
+.sxe-check input{position:absolute;opacity:0;pointer-events:none}
+.sxe-check .box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--pz-ink);display:flex;align-items:center;justify-content:center;color:transparent}
+.sxe-check input:checked + .box{background:var(--pz-ink);color:#fff}
+.sxe-off.sxe-check .box{border-color:#BFBFBF}
+.sxe-rodape{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+.sxe-cancelar{padding:12px;border:0;background:none;cursor:pointer;font-family:var(--pz-pop);font-weight:600;font-size:15px;color:var(--pz-ink)}
+.sxe-lista{padding-top:34px}
+.sxe-mais{margin-left:auto;margin-right:20px;width:40px;height:40px;border-radius:999px;border:0;background:var(--pz-surface);color:var(--pz-ink);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sxe-card{display:flex;align-items:center;gap:20px;padding:12px 20px;border-radius:24px;background:var(--pz-surface);cursor:pointer}
+.sxe-card .tx{flex:1;min-width:0;display:flex;flex-direction:column;padding:2px 0;font-family:var(--pz-sf);letter-spacing:-.5px}
+.sxe-card .t{font-size:17px;line-height:24px;color:var(--pz-ink)}
+.sxe-card .s{font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-note);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sxe-card > svg,.sxe-card > .lucide{flex-shrink:0;color:var(--pz-note)}
+.sxe-principal{flex-shrink:0;padding:4px 12px;border-radius:999px;background:#F5FBEA;border:1px solid #CCCDBE;font-family:var(--pz-sf);font-size:13px;font-weight:590;line-height:16px;letter-spacing:-.2px;color:#4D631F;white-space:nowrap}
+.sxe-nota{margin:16px 0 0;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-note)}
+.sx-folha-btns.sem-texto{margin-top:38px}

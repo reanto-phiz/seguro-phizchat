@@ -35,6 +35,15 @@ const ROTAS = {
   "sinistro-form-conta":      { comp: window.SxSinistroTelas.SxSinistro, params: { conta: true }, pais: ["chats", "dicas", "seguro"] },
   "sinistro-form-preenchido": { comp: window.SxSinistroTelas.SxSinistro, params: { preenchido: true }, pais: ["chats", "dicas", "seguro"] },
   "sinistro-enviado":     { comp: SXT.SxSeguro, params: { sinistroAberto: true }, pais: ["chats", "dicas"] },
+  // Verificado sem endereço (sx-endereco.jsx): cadastrar o endereço ativa o seguro
+  "endereco-novo":        { comp: window.SxEndereco.SxEndNovo, pais: ["me", "config", "seguranca"] },
+  "endereco-buscando":    { comp: window.SxEndereco.SxEndNovo, params: { buscando: true }, pais: ["me", "config", "seguranca"] },
+  "endereco-preenchido":  { comp: window.SxEndereco.SxEndNovo, params: { cheio: true }, pais: ["me", "config", "seguranca"] },
+  "enderecos":            { comp: window.SxEndereco.SxEnderecos, pais: ["me", "config", "seguranca"] },
+  "enderecos-cadastrado": { comp: window.SxEndereco.SxEnderecos, params: { cadastrado: true }, pais: ["me", "config", "seguranca"] },
+  // Kev Seguros (sx-kev.jsx): webview da apólice e mini app
+  "apolice": { comp: window.SxKev.SxApolice, pais: ["chats", "dicas", "seguro"] },
+  "kev":     { comp: window.SxKev.SxKevApp, pais: ["chats", "dicas", "seguro"] },
   // Depois do Concluído
   "verificado":     { comp: SXT.SxVerificado, pais: ["me", "config", "seguranca"] },
   // "Como funciona o seguro" abre o seguro já ativo; voltar leva à Segurança da Conta

@@ -216,11 +216,11 @@ function SgItem({ titulo, sub, sub2, tag, direita, chevron = true, critico, onCl
 const SgSecao = ({ children }) => <div className="sg-secao">{children}</div>;
 
 /* Tela interna padrão do arquivo: voltar 40 + título Poppins 32 (AppBar medium). */
-function SgTela({ titulo, onVoltar, children, rodape, extra, fundo }) {
+function SgTela({ titulo, onVoltar, children, rodape, extra, fundo, acao }) {
   return (
     <window.PhizHiFi.Screen>
       <div className={"pg sg-pg" + (fundo ? " " + fundo : "")}>
-        <window.PhizConfig.Topo titulo={titulo} onVoltar={onVoltar} />
+        <window.PhizConfig.Topo titulo={titulo} onVoltar={onVoltar} acao={acao} />
         <div className="pg-body sg-body">{children}</div>
         {rodape && <div className="sg-rodape">{rodape}</div>}
       </div>

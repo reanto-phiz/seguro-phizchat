@@ -19,6 +19,7 @@ window.PHIZ_JOURNEYS = {
         { title: "Lista de conversas", titleEn: "Chat list", screen: "chats@inativo", status: "done" },
         { title: "PhizChat", titleEn: "PhizChat", screen: "dicas@inativo", status: "done" },
         { title: "Saiba mais · 3 pontos", titleEn: "Learn more · 3 points", screen: "seguro@inativo", status: "done" },
+        { title: "Kev Seguros · mini app", titleEn: "Kev Seguros · mini app", screen: "kev@inativo", status: "in-progress" },
         { title: "Conversa · Seguro Grátis", titleEn: "Chat · Free insurance", screen: "sophia@inativo", status: "done" },
         { title: "Folha · verifique sua conta", titleEn: "Sheet · verify your account", screen: "sophia-folha@inativo", status: "done" },
         { title: "Contato · Seguro Grátis", titleEn: "Contact · free insurance", screen: "contato@inativo", status: "done" },
@@ -43,6 +44,8 @@ window.PHIZ_JOURNEYS = {
         { title: "Lista de conversas", titleEn: "Chat list", screen: "chats@ativo", status: "done" },
         { title: "PhizChat · protegido", titleEn: "PhizChat · covered", screen: "dicas@ativo", status: "done" },
         { title: "Meu seguro", titleEn: "My insurance", screen: "seguro@ativo", status: "done" },
+        { title: "Apólice · webview", titleEn: "Policy · webview", screen: "apolice@ativo", status: "in-progress" },
+        { title: "Kev Seguros · mini app", titleEn: "Kev Seguros · mini app", screen: "kev@ativo", status: "in-progress" },
         { title: "Conversa · seguro ativo", titleEn: "Chat · insurance active", screen: "sophia@ativo", status: "done" },
         { title: "Folha · conversa protegida", titleEn: "Sheet · chat covered", screen: "sophia-folha@ativo", status: "done" },
         { title: "Contato · seguro ativo", titleEn: "Contact · insurance active", screen: "contato@ativo", status: "done" },
@@ -78,7 +81,27 @@ window.PHIZ_JOURNEYS = {
       ]
     },
     {
-      id: "sinistro", n: 5,
+      id: "sem-endereco", n: 5,
+      title: "Verificados, sem endereço",
+      titleEn: "Verified, no address",
+      sub: "Os dois verificados, mas o Arthur não cadastrou endereço",
+      subEn: "Both verified, but Arthur has no address yet",
+      status: "in-progress", color: "#0E9384",
+      steps: [
+        { title: "Eu · verificado", titleEn: "Me · verified", screen: "me@sem-endereco", status: "done" },
+        { title: "Configurações", titleEn: "Settings", screen: "config@sem-endereco", status: "done" },
+        { title: "Segurança da Conta · sem endereço", titleEn: "Account security · no address", screen: "seguranca@sem-endereco", status: "done" },
+        { title: "Seguro · falta pouco", titleEn: "Insurance · almost there", screen: "seguro-verificado@sem-endereco", status: "done" },
+        { title: "Novo endereço · vazio", titleEn: "New address · empty", screen: "endereco-novo@sem-endereco", status: "done" },
+        { title: "Novo endereço · buscando CEP", titleEn: "New address · looking up ZIP", screen: "endereco-buscando@sem-endereco", status: "done" },
+        { title: "Novo endereço · preenchido", titleEn: "New address · filled in", screen: "endereco-preenchido@sem-endereco", status: "done" },
+        { title: "Endereços · cadastrado", titleEn: "Addresses · saved", screen: "enderecos-cadastrado@ativo", status: "done" },
+        { title: "Segurança da Conta · seguro ativo", titleEn: "Account security · insured", screen: "seguranca@ativo", status: "done" },
+        { title: "Eu · seguro ativo", titleEn: "Me · insured", screen: "me@ativo", status: "done" }
+      ]
+    },
+    {
+      id: "sinistro", n: 6,
       title: "Abrir sinistro",
       titleEn: "File a claim",
       sub: "Arthur caiu num golpe e pede a indenização pelo seguro",
@@ -92,7 +115,7 @@ window.PHIZ_JOURNEYS = {
       ]
     },
     {
-      id: "extra", n: 6,
+      id: "extra", n: 7,
       title: "Extra · promoção",
       titleEn: "Extra · promo",
       sub: "Modal sobre o seguro ao abrir o app (Arthur sem verificação)",
