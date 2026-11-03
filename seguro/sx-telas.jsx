@@ -12,7 +12,7 @@
 //     Dicas 120:15459 · 299:5668 · Seguro sem verificação 2449:43337
 //     Chat sem seguro 9:3040 → 2327:28076 (Seguro Grátis) → 2327:28667
 //     Chat segurado 9:1518 → 157:8978 → 339:42073
-//     Folhas 2342:34060 (verifique seu perfil) · 2342:34139 (assegurado)
+//     Folhas 2342:34060 (verifique sua conta) · 2342:34139 (assegurado)
 //   Account security 48:11325
 //     Sem verificação: Eu 57:13715 · Config 559:11585 · Segurança 48:12289
 //     Com verificação: Eu 2432:41369 · Segurança 48:11344 · Seguro ativo 2357:37461…
@@ -31,6 +31,8 @@ const SX_IMG = {
   medalSm: "img/medal-sm.png" + SX_V,
   medalPill: "img/medal-pill.png" + SX_V,
   promo: "img/promo.png" + SX_V,
+  // Mensagem "Verificou, ganhou." do PhizChat (120:15459)
+  promoVerificou: "img/promo-verificou.jpg" + SX_V,
   kev: "img/kev.png" + SX_V,
   sophia: "img/sophia.png" + SX_V,
   arthur: "img/av-arthur.png" + SX_V,
@@ -143,7 +145,7 @@ function SxPromo({ onFechar, onQuero }) {
         <div className="sx-promo-copy">
           <span className="chip">Seguro PhizChat</span>
           <h2>Verificou, ganhou.</h2>
-          <p>Verifique sua identidade<br />e ative o seu seguro grátis contra<br />golpes de perfis falsos.</p>
+          <p>Verifique sua identidade<br />e ative o seguro grátis contra<br />golpes de contas falsas.</p>
         </div>
         <div className="sx-promo-sheet">
           <div className="prova">
@@ -162,12 +164,12 @@ function SxPromo({ onFechar, onQuero }) {
 /* Pílula do seguro (2497:13836) — Eu e página de contato.
    Sem seguro: abre/fecha uma vez em 6s ("novo" só no Eu). Com seguro: só a medalha, parada.
    `claro` = fundo branco, pra ficar sobre a foto do contato. */
-function SxPilula({ ativo, novo, claro, onClick }) {
+function SxPilula({ ativo, novo, claro, onClick, rotulo = "Seguro Grátis" }) {
   const medalha = <span className="sx-pill-medal"><img src={SX_IMG.medalPill} alt="" /></span>;
   if (ativo) return <button className={"sx-me-medal" + (claro ? " claro" : "")} aria-label="Seguro PhizChat" onClick={onClick}>{medalha}</button>;
   return (
-    <button className={"sx-me-pill" + (claro ? " claro" : "")} aria-label="Seguro Grátis" onClick={onClick}>
-      <span className="in">{medalha}<span className="tx"><span>Seguro Grátis</span></span></span>
+    <button className={"sx-me-pill" + (claro ? " claro" : "")} aria-label={rotulo} onClick={onClick}>
+      <span className="in">{medalha}<span className="tx"><span>{rotulo}</span></span></span>
       {novo && <span className="sx-me-novo" aria-hidden="true"><span className="lb">novo</span><span className="flare" /></span>}
     </button>
   );
@@ -205,7 +207,7 @@ function SxContato() {
           <div className="bar">
             <button className="pz-glass" aria-label="Voltar" onClick={() => nav.pop()}>{C("arrow-left")}</button>
             <span className="sp" />
-            <SxPilula ativo={!animar} claro onClick={() => setFolha(true)} />
+            <SxPilula ativo={!animar} claro rotulo="Seguro grátis" onClick={() => setFolha(true)} />
             <button className="pz-glass" aria-label="Editar contato">{C("edit")}</button>
           </div>
           <div className="txt">
@@ -273,14 +275,15 @@ function SxContato() {
 
 /* ── Pós-verificação: "Verificou, ganhou." (2357:37771) ───────────────────
    Entra no lugar do fluxo de verificação ao tocar em Concluído.
-   "Como funciona o seguro" → seguro em análise · "Ver depois" → Segurança da
-   Conta já verificada (fluxo ativo). */
+   "Como funciona o seguro" → seguro já ativo · "Ver depois" → Segurança da
+   Conta já verificada. Nos dois, voltar leva à Segurança da Conta (fluxo ativo). */
 function SxVerificado() {
   const nav = window.PhizHiFi.useNav();
-  const depois = () => {
+  const vai = (...telas) => {
     SX_MODO.set("ativo");
-    nav.setStackTo(["me", "config", "seguranca"]);
+    nav.setStackTo(["me", "config", "seguranca", ...telas]);
   };
+  const depois = () => vai();
   return (
     <window.PhizHiFi.Screen statusDark>
       <div className="pg sx-pos">
@@ -289,11 +292,11 @@ function SxVerificado() {
           <div className="sx-promo-copy">
             <span className="chip">Seguro PhizChat</span>
             <h2>Parabéns!<br />Verificou, ganhou.</h2>
-            <p>PhizChat é o único app com seguro contra golpes. Se um perfil falso te enganar, você recebe até R$ 1.000 de volta.</p>
+            <p>PhizChat é o único app com seguro contra golpes. Se uma conta falsa te enganar, você não fica sozinho nessa.</p>
           </div>
           <div className="sx-promo-sheet">
             <div className="sx-pos-btns">
-              <SX.SgBtn onClick={() => nav.push("seguro-analise")}>Como funciona o seguro</SX.SgBtn>
+              <SX.SgBtn onClick={() => vai("seguro-verificado")}>Como funciona o seguro</SX.SgBtn>
               <SX.SgBtn kind="secondary" onClick={depois}>Ver depois</SX.SgBtn>
             </div>
           </div>
@@ -322,14 +325,14 @@ function SxChats({ params = {} }) {
         <PzChatsBar />
         <div className="pg-body sg-lista">
           <PzChatRow letra={<img src={SX_IMG.logo} alt="" style={{ width: 34, height: 34 }} />} cor="#19B852"
-            nome="PhizChat Dicas" selo hora="10:50" nova naoLidas={1} silencio
+            nome="PhizChat" selo hora="10:50" nova naoLidas={1} silencio
             prev={{ midia: "camera", texto: ativo ? "Você já está protegido. Seu Seguro PhizChat já vale desde hoje." : "Suas conversas protegidas, de graça Com o Seguro PhizChat, se uma conta…" }}
             onClick={() => nav.push("dicas")} />
           <PzChatRow foto={SX_IMG.sophia} nome="Sophia Turner" hora="10:48"
             prev={{ texto: "Combinado, te mando o comprovante 🙌" }}
             onClick={() => nav.push("sophia")} />
           <PzChatRow foto={P.ana2} nome="Amigos para sempre" hora="10:28" nova naoLidas={1} silencio
-            prev={{ quem: "Ricardo", texto: "Booa, vamos no Starbucks então, perto do escritório" }} />
+            prev={{ quem: "Ricardo", texto: "Booa, vamos no Starbucks então, perto do escritório!" }} />
           <PzChatRow letra="S" cor="#E0245E" nome="Silvia (Gerente do banco)" hora="8:49"
             prev={{ texto: "✨ De nada, Kaio! Se você quiser também pode consultar seus limites" }} />
           <PzChatRow foto={P.vitor} nome="Vitor da Silva Machado" hora="Ontem"
@@ -351,7 +354,7 @@ function SxChats({ params = {} }) {
   );
 }
 
-/* ── PhizChat Dicas (120:15459 · 299:5668) ───────────────────────────── */
+/* ── PhizChat (120:15459 · 299:5668) ───────────────────────────── */
 const SxDicasAv = ({ size = 40 }) => (
   <span className="sg-dicas-av" style={{ width: size, height: size }}>
     <img src={SX_IMG.logo} alt="" style={{ width: size * 0.62, height: size * 0.62 }} />
@@ -364,7 +367,7 @@ function SxDicas() {
   const { PzChatHeader, PzChat, PzThread, PzBiz } = window.PhizUI;
   const midia = (
     <div className="sg-promo">
-      <img src={SX_IMG.promo} alt="" />
+      <img src={ativo ? SX_IMG.promo : SX_IMG.promoVerificou} alt="" />
       <span className="sg-promo-tag">Seguro feito pela <img src={SX_IMG.kev} alt="Kev" /></span>
     </div>
   );
@@ -382,19 +385,19 @@ function SxDicas() {
         { sys: SX_E2E, warn: true },
         { data: "Hoje" },
         { node: <PzBiz media={midia} hora="11:22"
-            titulo="Suas conversas protegidas, de graça"
-            texto="Com o Seguro PhizChat, se uma conta com identidade verificada te aplicar um golpe aqui e a identidade dela for falsa, você recebe até R$ 1.000 pelo prejuízo."
+            titulo="Seguro PhizChat contra golpes. Verificou, ganhou."
+            texto="PhizChat é o único app com seguro contra golpes. Se uma conta falsa te enganar, você não fica sozinho nessa."
             rodape={SX_RODAPE}
             ctas={[{ label: "Saiba mais", onClick: () => nav.push("seguro") }]} /> }
       ];
   return (
     <window.PhizHiFi.Screen>
-      <PzChatHeader nome="PhizChat Dicas" selo status="Conta oficial"
+      <PzChatHeader nome="PhizChat" selo status="Conta oficial"
         avatar={<SxDicasAv />} onVoltar={() => nav.pop()} acoes={null} />
       <PzChat seguir={ativo ? "a" : "i"}>
         <PzThread itens={itens} />
       </PzChat>
-      <div className="sg-so-admin">Apenas <em>PhizChat Dicas</em> pode enviar mensagens</div>
+      <div className="sg-so-admin">Apenas <em>PhizChat</em> pode enviar mensagens</div>
     </window.PhizHiFi.Screen>
   );
 }
@@ -402,9 +405,9 @@ function SxDicas() {
 /* ── Seguro PhizChat (2449:43337 · inativo / 2357:37461 · ativo) ─────────
    Os 3 pontos do seguro. Inativo: CTA de verificação. Ativo: apólice. */
 const SX_PONTOS = [
-  { ic: "ic-check", t: "Até R$ 1.000 de cobertura", s: <React.Fragment>Caiu no golpe de um perfil falso?<br />O Seguro PhizChat cobre o prejuízo.</React.Fragment> },
+  { ic: "ic-check", t: "Até R$ 1.000 de cobertura", s: <React.Fragment>Caiu no golpe de uma conta falsa?<br />O Seguro PhizChat cobre o prejuízo.</React.Fragment> },
   { ic: "ic-face", t: "Verifique sua identidade", s: "Seu seguro é ativado assim que sua identidade é confirmada." },
-  { ic: "ic-lock", t: "Vale entre perfis verificados", s: "O seguro funciona quando você e a pessoa com quem está conversando têm o selo de verificado." }
+  { ic: "ic-lock", t: "Vale entre contas verificadas", s: "O seguro funciona quando você e a pessoa com quem está conversando têm o selo de verificado." }
 ];
 
 function SxSeguro({ params = {} }) {
@@ -414,13 +417,16 @@ function SxSeguro({ params = {} }) {
   const [toast, setToast] = React.useState(null);
   const avisa = (t) => setToast(t + "·" + Date.now());
   // Voltando de um sinistro enviado: notificação do sistema + toast (uma vez)
-  const [sinistro] = React.useState(() => {
+  // "Abrir sinistro" abre a folha de suporte (params.suporte: true = vazia, "cheio" = preenchida)
+  const [suporte, setSuporte] = React.useState(params.suporte || false);
+  const [sinistro, setSinistro] = React.useState(() => {
     const envio = window.SxSinistroTelas && window.SxSinistroTelas.SXS_ENVIO;
     const v = !!params.sinistroAberto || !!(envio && envio.aberto);
     if (envio) envio.aberto = false;
-    return v;
+    return v ? 1 : 0;
   });
-  React.useEffect(() => { if (sinistro) avisa("Sinistro aberto com sucesso"); }, []);
+  React.useEffect(() => { if (sinistro) avisa("Enviado com sucesso"); }, []);
+  const enviouSuporte = () => { setSinistro(n => n + 1); avisa("Enviado com sucesso"); };
   return (
     <window.PhizHiFi.Screen>
       <div className="pg sx-seguro">
@@ -430,7 +436,7 @@ function SxSeguro({ params = {} }) {
         <div className="pg-body sx-seguro-body">
           <div className="sx-seguro-topo">
             <img className="sx-medalha-xl" src={SX_IMG.medalha} alt="" />
-            <h1>{ativo || analise ? "Seguro contra golpes" : "Seguro PhizChat"}</h1>
+            <h1>Seu primeiro seguro contra golpes</h1>
           </div>
           <div className="sx-pontos">
             {SX_PONTOS.map((p, i) => (
@@ -446,18 +452,21 @@ function SxSeguro({ params = {} }) {
               <span className="tx"><span className="t">Verificação em análise</span><span className="s">Seu seguro contra golpes passa a valer assim que sua identidade for verificada.</span></span>
             </div>
           )}
-        </div>
-        <div className="sx-rodape">
+          {/* Botões no fim da rolagem, não fixos */}
+          <div className="sx-rodape sx-seguro-btns">
           {analise
             ? <SX.SgBtn onClick={() => avisa("Abre o cadastro de endereço")}>Cadastrar endereço</SX.SgBtn>
             : ativo
               ? <SX.SgBtn onClick={() => avisa("Abre a apólice do seguro")}>Ver apólice</SX.SgBtn>
               : <SX.SgBtn onClick={() => nav.push("verificar")}>Verificar identidade</SX.SgBtn>}
           <SX.SgBtn kind="secondary" icon="external-link" onClick={() => avisa("Abre a página do Seguro PhizChat")}>Mais sobre o seguro</SX.SgBtn>
-          {ativo && !analise && <button className="sx-sinistro" onClick={() => nav.push("sinistro")}>Abrir sinistro</button>}
+          {ativo && !analise && <button className="sx-sinistro" onClick={() => setSuporte(true)}>Abrir sinistro</button>}
+          </div>
         </div>
       </div>
-      {sinistro && <window.SxSinistroTelas.SxsNotificacao />}
+      {suporte && <window.SxSinistroTelas.SxsSuporte cheio={suporte === "cheio"}
+        onFechar={() => setSuporte(false)} onEnviar={enviouSuporte} />}
+      {sinistro > 0 && <window.SxSinistroTelas.SxsNotificacao key={sinistro} onToque={() => avisa("Abrir email")} />}
       {toast && <SX.SgToast key={toast}>{toast.split("·")[0]}</SX.SgToast>}
     </window.PhizHiFi.Screen>
   );
@@ -480,16 +489,16 @@ function SxPessoa({ foto, nome, ok }) {
 // 1 Arthur ok, Sophia não · 2 Arthur não, Sophia ok · 3 nenhum · 4 os dois
 const SX_CENARIOS = {
   1: { titulo: <React.Fragment>Esta pessoa não verificou<br />a identidade.</React.Fragment>,
-       texto: "O Seguro PhizChat contra golpes não está ativo para esta conversa. Convide essa pessoa para verificar o perfil para ativar o seguro.",
+       texto: "O Seguro PhizChat contra golpes não está ativo para esta conversa. Convide esta pessoa para verificar a conta para ativar o seguro.",
        cta: "Convidar para verificar" },
-  2: { titulo: <React.Fragment>Verifique seu perfil<br />e ganhe um seguro contra golpes para esta conversa.</React.Fragment>,
-       texto: <React.Fragment>Verifique sua identidade<br />e ative o Seguro PhizChat contra<br />golpes de perfis falsos.</React.Fragment>,
+  2: { titulo: <React.Fragment>Verifique sua conta<br />e ganhe um seguro contra golpes para esta conversa.</React.Fragment>,
+       texto: <React.Fragment>Verifique sua identidade<br />e ative o Seguro PhizChat contra<br />golpes de contas falsas.</React.Fragment>,
        cta: "Verificar sua identidade" },
-  3: { titulo: <React.Fragment>Verifique seu perfil<br />e ganhe um seguro contra golpes para essa conversa.</React.Fragment>,
-       texto: "O Seguro PhizChat contra golpes vale exclusivamente para conversas entre perfis verificados.",
+  3: { titulo: <React.Fragment>Verifique sua conta<br />e ganhe um seguro contra golpes para esta conversa.</React.Fragment>,
+       texto: "O Seguro PhizChat contra golpes vale exclusivamente para conversas entre contas verificadas.",
        cta: "Verificar sua identidade" },
   4: { titulo: "Seguro contra golpes está ativo para esta conversa.",
-       texto: <React.Fragment>Se esta pessoa não for quem diz ser e te aplicar um golpe, seu Seguro PhizChat tem cobertura de até <b>R$ 1.000</b>.</React.Fragment> }
+       texto: "Se esta pessoa não for quem diz ser e te aplicar um golpe, seu Seguro PhizChat tem cobertura." }
 };
 const sxCenario = (arthurOk, sophiaOk) => arthurOk ? (sophiaOk ? 4 : 1) : (sophiaOk ? 2 : 3);
 
@@ -515,7 +524,7 @@ function SxFolha({ cenario, onFechar, onCta, onSobre }) {
           <p className="sx-folha-p">{c.texto}</p>
           <div className="sx-folha-btns">
             {c.cta && <SX.SgBtn onClick={onCta}>{c.cta}</SX.SgBtn>}
-            <SX.SgBtn kind="secondary" onClick={onSobre}>{ativo ? "Sobre o seguro" : "Entenda sobre o seguro"}</SX.SgBtn>
+            <SX.SgBtn kind="secondary" onClick={onSobre}>Ver cobertura</SX.SgBtn>
           </div>
         </React.Fragment>
       )}
@@ -604,7 +613,7 @@ function SxSophia({ params = {} }) {
       <div className={"sx-aviso " + aviso}>
         <button className="sx-aviso-in" onClick={abreFolha}>
           <span className="sx-pill-medal p16"><img src={SX_IMG.medalPill} alt="" /></span>
-          <span className="t">{ativo ? "Seguro contra golpes ativo" : cenario === 1 ? "Seguro inativo nesta conversa" : "Seguro Grátis"}</span>
+          <span className="t">{ativo ? "Seguro contra golpes ativo" : cenario === 1 ? "Seguro inativo nesta conversa" : "Seguro grátis"}</span>
           <span className="l">Saiba mais</span>
         </button>
       </div>
@@ -654,7 +663,7 @@ function SxMe() {
             <div className="h">Phiz ID: 116342</div>
           </div>
           <div className={"sg-me-card" + (ativo ? " sx-so-nivel" : "")}>
-            <div className="sg-nivel" onClick={() => nav.push("config")} role="button">
+            <div className="sg-nivel" onClick={() => nav.push("seguranca")} role="button">
               <span className={"sg-nivel-ic" + (ativo ? " on" : "")}>{nivel}</span>
               <span className="t">Proteção da conta: Nível {nivel}</span>
               <window.Icon name="chevron-right" size={16} />
@@ -716,16 +725,16 @@ function SxSeguranca() {
         {ativo
           ? <div className="sx-seg-ativo" role="button" onClick={() => nav.push("seguro")}>
               <SxMedal size={28} />
-              <span className="tx"><span className="t">Seguro PhizChat</span><span className="s">Até R$ 1.000 em caso de golpe</span></span>
+              <span className="tx"><span className="t">Seguro PhizChat</span><span className="s">Ativo</span></span>
               <Ok />
             </div>
           : <button className="sx-seg-card" onClick={() => nav.push("seguro")}>
               <span className="sx-seg-card-ic"><span className="sx-pill-medal"><img src={SX_IMG.medalPill} alt="" /></span></span>
-              <span className="tx"><span className="t">Seguro grátis contra golpes</span><span className="s">Até R$ 1.000 de cobertura</span></span>
+              <span className="tx"><span className="t">Seguro grátis contra golpes</span><span className="s">Verificou, ganhou.</span></span>
               <window.Icon name="chevron-right" size={24} />
             </button>}
       </div>
-      <SX.SgSecao>Informações Pessoais</SX.SgSecao>
+      <SX.SgSecao>{ativo ? "Informações da Conta" : "Informações Pessoais"}</SX.SgSecao>
       <div className="sg-pad">
         <SX.SgGroup>
           <SX.SgItem titulo="Número de telefone" sub="+55 (11) 98765-4321" onClick={() => {}} />

@@ -26,15 +26,20 @@ const ROTAS = {
   "verificar-dados":   { comp: window.SxKyc.SxKycDados, pais: ["me", "config", "seguranca", "verificar"] },
   "verificar-rosto":   { comp: window.SxKyc.SxKycRosto, pais: ["me", "config", "seguranca", "verificar", "verificar-dados"] },
   "verificar-camera":  { comp: window.SxKyc.SxKycCamera, pais: ["me", "config", "seguranca", "verificar", "verificar-dados", "verificar-rosto"] },
-  "verificar-analise": { comp: window.SxKyc.SxKycAnalise, pais: ["me", "config", "seguranca", "verificar", "verificar-dados", "verificar-rosto"] },
-  // Abertura de sinistro (sx-sinistro.jsx) — a partir do seguro ativo
-  "sinistro":             { comp: window.SxSinistroTelas.SxSinistro, pais: ["chats", "dicas", "seguro"] },
-  "sinistro-conta":       { comp: window.SxSinistroTelas.SxSinistro, params: { conta: true }, pais: ["chats", "dicas", "seguro"] },
-  "sinistro-preenchido":  { comp: window.SxSinistroTelas.SxSinistro, params: { preenchido: true }, pais: ["chats", "dicas", "seguro"] },
+  "verificar-analise": { comp: window.SxKyc.SxKycAnalise, pais: ["me", "config", "seguranca", "verificar", "verificar-dados"] },
+  // Abertura de sinistro (sx-sinistro.jsx) — o "Abrir sinistro" do seguro ativo abre a folha de suporte
+  "sinistro":             { comp: SXT.SxSeguro, params: { suporte: true }, pais: ["chats", "dicas"] },
+  "sinistro-preenchido":  { comp: SXT.SxSeguro, params: { suporte: "cheio" }, pais: ["chats", "dicas"] },
+  // Formulário de sinistro anterior (I1/I3): fora do fluxo, só por link direto
+  "sinistro-form":            { comp: window.SxSinistroTelas.SxSinistro, pais: ["chats", "dicas", "seguro"] },
+  "sinistro-form-conta":      { comp: window.SxSinistroTelas.SxSinistro, params: { conta: true }, pais: ["chats", "dicas", "seguro"] },
+  "sinistro-form-preenchido": { comp: window.SxSinistroTelas.SxSinistro, params: { preenchido: true }, pais: ["chats", "dicas", "seguro"] },
   "sinistro-enviado":     { comp: SXT.SxSeguro, params: { sinistroAberto: true }, pais: ["chats", "dicas"] },
-  "seguro-chat":          { comp: window.SxSinistroTelas.SxSeguroChat, pais: ["chats", "dicas", "seguro"] },
   // Depois do Concluído
   "verificado":     { comp: SXT.SxVerificado, pais: ["me", "config", "seguranca"] },
+  // "Como funciona o seguro" abre o seguro já ativo; voltar leva à Segurança da Conta
+  "seguro-verificado": { comp: SXT.SxSeguro, pais: ["me", "config", "seguranca"] },
+  // Seguro com a verificação em análise: fora do fluxo, só por link direto
   "seguro-analise": { comp: SXT.SxSeguro, params: { analise: true }, pais: ["me", "config", "seguranca"] }
 };
 
@@ -45,7 +50,7 @@ const sxPasso = (passo) => {
   return rota;
 };
 
-// Abrir o app = promoção por cima da lista, no fluxo inativo.
+// Abrir o app = lista de conversas, no fluxo inativo (a promoção é o fluxo extra, no fim da sidebar).
 // Link direto (#…/rota@modo) aplica o modo da tela do topo.
 // Recarregar a página mantém o fluxo (o hash da pilha não guarda o modo).
 const SX_INICIO = (function () {
@@ -59,7 +64,7 @@ const SX_INICIO = (function () {
   let salvo = null;
   try { salvo = sessionStorage.getItem("sx-modo"); } catch (e) {}
   SXT.SX_MODO.set(h.length && salvo ? salvo : "inativo");
-  return "promo";
+  return "chats";
 })();
 SXT.SX_MODO.subs.add(() => { try { sessionStorage.setItem("sx-modo", SXT.SX_MODO.v); } catch (e) {} });
 try { sessionStorage.setItem("sx-modo", SXT.SX_MODO.v); } catch (e) {}

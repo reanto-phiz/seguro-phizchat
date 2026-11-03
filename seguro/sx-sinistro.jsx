@@ -1,8 +1,8 @@
 // sx-sinistro.jsx — abertura de sinistro (Account security · I1 Pedir indenização
 // 346:9620 → BottomSheet Escolher a conta 347:10612 → I3 Pedido preenchido 346:9664).
-// Entra pelo "Abrir sinistro" da tela do seguro ativo. Ao enviar, volta pro seguro
-// com a notificação e o toast de sinistro aberto; a notificação abre a conversa
-// da conta oficial "Seguro PhizChat" com a confirmação.
+// Hoje o "Abrir sinistro" do seguro ativo abre a folha de suporte (SxsSuporte); ao
+// enviar, a tela do seguro mostra a notificação e o snackbar. O formulário fica
+// fora do fluxo, só por link direto (#…/sinistro-form).
 
 const SXS_IMG = {
   bo: "img/sin-bo.jpg" + SX_V,
@@ -21,11 +21,12 @@ const SXS_CONTAS = [
 const SXS_EXEMPLO = {
   data: "14/10/2026",
   valor: "R$ 180,00",
-  texto: "A Sophia me pediu R$ 180 por Pix para dividir o presente de aniversário de uma amiga em comum. Fiz o Pix e depois descobri que ela não era a Sophia de verdade."
+  texto: "A Sophia me pediu R$ 180 por Pix para dividir o presente de aniversário de uma amiga em comum. Fiz o Pix e depois descobri que ela não era a Sophia de verdade.",
+  email: "arthur.coimbra@gmail.com"
 };
 
-const SXS_CHEIO = { conta: "sophia", data: SXS_EXEMPLO.data, valor: SXS_EXEMPLO.valor, texto: SXS_EXEMPLO.texto, bo: true, comprovante: true, prints: 3 };
-const SXS_VAZIO = { conta: null, data: "", valor: "", texto: "", bo: false, comprovante: false, prints: 0 };
+const SXS_CHEIO = { conta: "sophia", data: SXS_EXEMPLO.data, valor: SXS_EXEMPLO.valor, texto: SXS_EXEMPLO.texto, email: SXS_EXEMPLO.email, bo: true, comprovante: true, prints: 3 };
+const SXS_VAZIO = { conta: null, data: "", valor: "", texto: "", email: "", bo: false, comprovante: false, prints: 0 };
 
 // Pedido enviado: a tela do seguro mostra a notificação e o toast ao voltar
 const SXS_ENVIO = { aberto: false };
@@ -65,7 +66,7 @@ function SxSinistro({ params = {} }) {
   const [enviando, setEnviando] = React.useState(false);
   const set = (k) => (v) => setF(x => ({ ...x, [k]: v }));
   const conta = SXS_CONTAS.find(c => c.id === f.conta);
-  const pronto = conta && f.data && f.valor && f.texto && f.bo && f.comprovante && f.prints >= 3;
+  const pronto = conta && f.data && f.valor && f.texto && f.email && f.bo && f.comprovante && f.prints >= 3;
 
   const enviar = () => {
     setEnviando(true);
@@ -120,6 +121,9 @@ function SxSinistro({ params = {} }) {
         <SX.SgSecao>O que aconteceu</SX.SgSecao>
         <div className="sg-pad"><SxsCampo area label="Descreva o que aconteceu" valor={f.texto} onChange={set("texto")} exemplo={SXS_EXEMPLO.texto} /></div>
 
+        <SX.SgSecao>Contato</SX.SgSecao>
+        <div className="sg-pad"><SxsCampo label="Digite seu email" valor={f.email} onChange={set("email")} exemplo={SXS_EXEMPLO.email} /></div>
+
         <SX.SgSecao>Boletim de Ocorrência</SX.SgSecao>
         <div className="sg-pad sxs-anexos">
           <div className="fila">{f.bo
@@ -158,44 +162,68 @@ function SxSinistro({ params = {} }) {
   );
 }
 
-/* Conversa da conta oficial "Seguro PhizChat": confirma o sinistro aberto.
-   Abre tocando na notificação (ou pela sidebar). Só a conta envia mensagens. */
-const SxsSeguroAv = ({ size = 40 }) => (
-  <span className="sxs-seguro-av" style={{ width: size, height: size }}>
-    <span className="sx-pill-medal"><img src={SX_IMG.medalPill} alt="" /></span>
-  </span>
-);
+/* Folha de suporte (Feedback 2582:11494 · 11507 · 11520): é o que abre no
+   "Abrir sinistro". Tocar num campo vazio preenche o exemplo; o "+" anexa até 9
+   imagens. Enviar fecha a folha e a tela do seguro mostra o sinistro aberto. */
+const SXS_SUPORTE = {
+  email: "arthur.coimbra@gmail.com",
+  telefone: "+55 (11) 98765-4321",
+  nome: "Arthur Coimbra",
+  texto: "Caí num golpe na conversa com a Sophia Turner: paguei R$ 180 por Pix e depois descobri que a conta era falsa."
+};
+const SXS_SUP_IMGS = [...SXS_IMG.prints, SXS_IMG.comprovante, SXS_IMG.bo];
+const SXS_SUP_MAX = 150;
 
-function SxSeguroChat() {
-  const nav = window.PhizHiFi.useNav();
-  const { PzChatHeader, PzChat, PzThread, PzBiz } = window.PhizUI;
-  const [toast, setToast] = React.useState(null);
-  const itens = [
-    { sys: SX_E2E, warn: true },
-    { data: "Hoje" },
-    { node: <PzBiz hora="9:41"
-        titulo="Seu sinistro foi aberto"
-        texto="Recebemos seu pedido de indenização pelo golpe na conversa com Sophia Turner, de R$ 180,00 em 14/10/2026. Ele está em análise e a gente te responde por aqui em até 10 dias úteis."
-        rodape="Protocolo nº 2026.1030.4817"
-        ctas={[{ label: "Acompanhar pedido", onClick: () => setToast("Abre o acompanhamento do sinistro·" + Date.now()) }]} /> }
-  ];
+function SxsSuporte({ cheio, onFechar, onEnviar }) {
+  const [f, setF] = React.useState(cheio
+    ? { ...SXS_SUPORTE, imgs: 3 }
+    : { email: "", telefone: "", nome: "", texto: "", imgs: 0 });
+  const [enviando, setEnviando] = React.useState(false);
+  const set = (k) => (v) => setF(x => ({ ...x, [k]: k === "texto" ? v.slice(0, SXS_SUP_MAX) : v }));
+  const pronto = f.email && f.telefone && f.nome && f.texto;
+  const campo = (k, label, area) => (
+    <SxsCampo area={area} label={label} valor={f[k]} onChange={set(k)} exemplo={SXS_SUPORTE[k]} />
+  );
   return (
-    <window.PhizHiFi.Screen>
-      <PzChatHeader nome="Seguro PhizChat" selo status="Conta oficial"
-        avatar={<SxsSeguroAv />} onVoltar={() => nav.pop()} acoes={null} />
-      <PzChat seguir="s">
-        <PzThread itens={itens} />
-      </PzChat>
-      <div className="sg-so-admin">Apenas <em>Seguro PhizChat</em> pode enviar mensagens</div>
-      {toast && <SX.SgToast key={toast}>{toast.split("·")[0]}</SX.SgToast>}
-    </window.PhizHiFi.Screen>
+    <SX.SgSheet onClose={onFechar} className="sxs-suporte">
+      {(fecha) => (
+        <React.Fragment>
+          <h2>Envie seu feedback</h2>
+          <div className="sxs-sup-corpo">
+            <div className="sxs-sup-campos">
+              {campo("email", "E-mail de contato")}
+              {campo("telefone", "Número de telefone")}
+              {campo("nome", "Nome")}
+              <div>
+                {campo("texto", "Descrição", true)}
+                <p className="sxs-sup-conta">{f.texto.length}/{SXS_SUP_MAX}</p>
+              </div>
+            </div>
+            <div className="sxs-sup-imgs-h"><h3>Imagens</h3><p>{f.imgs}/9</p></div>
+            <div className="sxs-sup-imgs">
+              {Array.from({ length: f.imgs }, (_, i) => (
+                <div key={i} className="sxs-sup-img">
+                  <img src={SXS_SUP_IMGS[i % SXS_SUP_IMGS.length]} alt="" />
+                  <button className="sxs-sup-x" aria-label="Remover imagem"
+                    onClick={() => setF(x => ({ ...x, imgs: x.imgs - 1 }))}><window.Icon name="x" size={14} /></button>
+                </div>
+              ))}
+              {f.imgs < 9 && <SxsMais label="Adicionar imagem" onClick={() => setF(x => ({ ...x, imgs: x.imgs + 1 }))} />}
+            </div>
+          </div>
+          <div className="sxs-sup-rodape">
+            <SX.SgBtn disabled={!pronto} loading={enviando}
+              onClick={() => { setEnviando(true); setTimeout(() => { onEnviar(); fecha(); }, 900); }}>Enviar</SX.SgBtn>
+          </div>
+        </React.Fragment>
+      )}
+    </SX.SgSheet>
   );
 }
 
 /* Notificação do sistema ao voltar pro seguro: desce, fica ~4s e sobe.
-   Tocar nela abre a conversa do Seguro PhizChat. */
-function SxsNotificacao() {
-  const nav = window.PhizHiFi.useNav();
+   Tocar nela só some e chama onToque (a tela mostra o snackbar "Abrir email"). */
+function SxsNotificacao({ onToque }) {
   const [fase, setFase] = React.useState("entra");
   React.useEffect(() => {
     const a = setTimeout(() => setFase("sai"), 4200);
@@ -204,13 +232,13 @@ function SxsNotificacao() {
   }, []);
   if (fase === "fim") return null;
   return (
-    <div className={"sxs-notif " + fase} role="button" aria-label="Abrir conversa do Seguro PhizChat"
-      onClick={() => { setFase("fim"); nav.push("seguro-chat"); }}>
-      <img className="ic" src={(window.__SHARED || "../shared/") + "assets/logomark-green.svg"} alt="" />
-      <span className="tx"><b>Seguro PhizChat</b><span>Seu Sinistro foi aberto e está em análise</span></span>
+    <div className={"sxs-notif " + fase} role="button" aria-label="Abrir email"
+      onClick={() => { setFase("fim"); if (onToque) onToque(); }}>
+      <img className="ic" src={"img/ic-gmail.svg" + SX_V} alt="Gmail" />
+      <span className="tx"><b>Seguro PhizChat</b><span>Seu Sinistro foi aberto e estamos trabalhando nele</span></span>
       <span className="h">9:41 AM</span>
     </div>
   );
 }
 
-window.SxSinistroTelas = { SxSinistro, SxSeguroChat, SxsNotificacao, SXS_ENVIO };
+window.SxSinistroTelas = { SxSinistro, SxsSuporte, SxsNotificacao, SXS_ENVIO };

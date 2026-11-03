@@ -1,6 +1,6 @@
 // sx-kyc.jsx — verificação de identidade, resumida como no Figma
 // (Account security · Verify 2165:24176 → Identity verification 2165:24193 →
-//  Jumio 2165:24203 / 24206 / 24209 → Under review 2165:24212).
+//  Under review 2165:24212). As telas do Jumio (2165:24203/06/09) saíram do fluxo.
 // Toda ação "verificar identidade" do protótipo empurra "verificar".
 // "Concluído" tira as telas da verificação da pilha e abre o "Verificou, ganhou."
 
@@ -69,7 +69,7 @@ function SxKycDados() {
   const nav = window.PhizHiFi.useNav();
   return (
     <SX.SgTela titulo="Verificação de identidade" onVoltar={() => nav.pop()}
-      rodape={<SX.SgBtn onClick={() => nav.push("verificar-rosto")}>Avançar</SX.SgBtn>}>
+      rodape={<SX.SgBtn onClick={() => nav.push("verificar-analise")}>Avançar</SX.SgBtn>}>
       <div className="sg-pad sxk-form">
         <div className="sxk-nac" role="button">
           <span className="flag" aria-hidden="true">🇧🇷</span>
@@ -84,6 +84,7 @@ function SxKycDados() {
 }
 
 /* 3 · SDK de prova de vida (Jumio): instruções → câmera → upload ok.
+   Fora do fluxo: os dados vão direto pra "em análise"; essas telas só abrem por link direto.
    As telas do SDK são imagens; só os toques ficam por cima. */
 function SxKycRosto() {
   const nav = window.PhizHiFi.useNav();

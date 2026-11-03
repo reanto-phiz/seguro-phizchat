@@ -29,3 +29,5 @@ Na Vercel, a raiz do site redireciona para `/seguro/` (`vercel.json`).
 2. Seguro ativo — os dois verificados
 3. Arthur verificado, Sophia não
 4. Nenhum verificado
+5. Abrir sinistro — folha de suporte a partir do seguro ativo
+6. Extra · promoção — o modal sobre o seguro ao abrir o app

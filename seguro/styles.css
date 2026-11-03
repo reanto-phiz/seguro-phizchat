@@ -397,6 +397,10 @@
 /* o degradê sobe por trás da status bar (que é transparente) */
 .sx-seguro{position:relative;margin-top:-62px;padding-top:62px;background:linear-gradient(180deg,#E6F4C9 0%,rgba(230,244,201,0) 44%),#fff}
 .sx-seguro .pg-body{background:transparent}
+/* rolagem contínua: o degradê rola junto e os botões ficam no fim do conteúdo */
+.sx-seguro{background:linear-gradient(180deg,#E6F4C9 0,rgba(230,244,201,.835) 62px,#fff 62px)}
+.sx-seguro .sx-seguro-body{background:linear-gradient(180deg,rgba(230,244,201,.835) 0,rgba(230,244,201,0) 313px) no-repeat local,#fff}
+.sx-seguro-btns{padding:32px 20px 16px}
 .sx-glass-back{
   position:absolute;top:128px;left:20px;z-index:4;width:40px;height:40px;border-radius:999px;cursor:pointer;
   border:1px solid #fff;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -684,7 +688,7 @@
   background:rgba(245,245,245,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 8px 24px rgba(0,0,0,.12);
   animation:sxsDesce .42s cubic-bezier(.2,.9,.25,1) both}
 .sxs-notif.sai{animation:sxsSobe .32s ease-in both}
-.sxs-notif .ic{width:38px;height:38px;border-radius:10px;flex-shrink:0}
+.sxs-notif .ic{width:38px;height:38px;border-radius:10px;flex-shrink:0;box-shadow:0 0 0 .5px rgba(0,0,0,.08)}
 .sxs-notif .tx{flex:1;min-width:0;display:flex;flex-direction:column;font-family:var(--pz-sf);font-size:15px;line-height:20px;letter-spacing:-.4px;color:var(--pz-ink)}
 .sxs-notif .tx b{font-weight:590}
 .sxs-notif .tx span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3C3C43}
@@ -693,5 +697,28 @@
 @keyframes sxsSobe{to{transform:translateY(-120%);opacity:0}}
 @media (prefers-reduced-motion: reduce){.sxs-notif,.sxs-anexo{animation:none!important}}
 .sxs-notif{cursor:pointer}
-/* Avatar da conta oficial Seguro PhizChat: a medalha num círculo verde-claro */
-.sxs-seguro-av{flex-shrink:0;border-radius:999px;background:#E6F4C9;display:flex;align-items:center;justify-content:center}
+
+/* Folha de suporte do "Abrir sinistro" (Feedback 2582:11494): começa 72px abaixo
+   do topo, campos rolam e o "Enviar" fica fixo embaixo */
+.sg-sheet.sxs-suporte{height:calc(100% - 72px);max-height:none;padding:0;display:flex;flex-direction:column;overflow:clip}
+.sxs-suporte .sg-sheet-x{top:20px;right:20px}
+.sxs-suporte h2{margin:76px 20px 0;font-family:var(--pz-pop);font-weight:600;font-size:24px;line-height:32px;letter-spacing:-1px;color:var(--pz-ink)}
+.sxs-sup-corpo{flex:1;min-height:0;overflow-y:auto;padding:28px 0 16px;scrollbar-width:none}
+.sxs-sup-corpo::-webkit-scrollbar{width:0}
+.sxs-sup-campos{display:flex;flex-direction:column;gap:20px;padding:0 20px}
+.sxs-suporte .sxs-campo.area{min-height:144px}
+.sxs-suporte .sxs-campo.area textarea{min-height:120px}
+.sxs-sup-conta{margin:4px 0 0;text-align:right;font-family:var(--pz-sf);font-size:13px;line-height:16px;color:var(--pz-note)}
+.sxs-sup-imgs-h{padding:12px 20px 12px}
+.sxs-sup-imgs-h h3{margin:0;font-family:var(--pz-pop);font-weight:600;font-size:20px;line-height:28px;letter-spacing:-.5px;color:var(--pz-ink)}
+.sxs-sup-imgs-h p{margin:4px 0 0;font-family:var(--pz-sf);font-size:15px;line-height:20px;color:var(--pz-note)}
+.sxs-sup-imgs{display:flex;gap:10px;overflow-x:auto;padding:4px 20px 0;scrollbar-width:none}
+.sxs-sup-imgs::-webkit-scrollbar{height:0}
+.sxs-sup-imgs .sxs-mais{flex-shrink:0}
+.sxs-sup-img{position:relative;width:128px;height:128px;flex-shrink:0;animation:sgEntra .24s var(--sg-out) both}
+.sxs-sup-img > img{width:100%;height:100%;object-fit:cover;border-radius:24px;display:block}
+.sxs-sup-x{position:absolute;top:-4px;right:-4px;width:24px;height:24px;border-radius:999px;border:2px solid #fff;padding:0;cursor:pointer;
+  background:var(--pz-surface);color:var(--pz-ink);box-shadow:0 4px 16px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center}
+.sxs-sup-rodape{padding:16px 20px 37px;background:#fff}
+.sxs-sup-rodape .sg-btn:disabled{background:#19B852;color:#fff;opacity:.4}
+@media (prefers-reduced-motion: reduce){.sxs-sup-img{animation:none!important}}
